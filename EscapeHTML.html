@@ -1,64 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <title>Escape Game</title>
     <style>
-        canvas {
-            border:1px solid #d3d3d3;
-            background-color: #f1f1f1;
-        }
+        * { padding: 0; margin: 0;}
+        canvas {background: #383940; display: block; margin: 0 auto; }
     </style>
 </head>
-<body onload="startGame()">
+<body>
+<canvas id="myCanvas" width="1400" height="700"></canvas>
 <script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var x = canvas.width/2;
+    var y = canvas.height/2;
 
-    var redGamePiece, blueGamePiece, yellowGamePiece;
+    var rightPressed = false;
+    var leftPressed = false;
+    var upPressed = false;
+    var downPressed = false;
 
-    function startGame() {
-        redGamePiece = new component(75, 75, "red", 10, 10);
-        yellowGamePiece = new component(75, 75, "yellow", 50, 60);
-        blueGamePiece = new component(75, 75, "blue", 10, 220);
-        myGameArea.start();
-    }
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
 
-    var myGameArea = {
-        canvas : document.createElement("canvas"),
-        start : function() {
-            this.canvas.width = 480;
-            this.canvas.height = 270;
-            this.context = this.canvas.getContext("2d");
-            document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-            this.interval = setInterval(updateGameArea, 20);
-        },
-        clear : function() {
-            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    // Checks if keys are pressed
+    function keyDownHandler(e) {
+        if(e.keyCode === 39) {
+            rightPressed = true;
+        }
+        else if(e.keyCode === 37) {
+            leftPressed = true;
+        }
+        else if(e.keyCode === 38) {
+            upPressed = true;
+        }
+        else if(e.keyCode === 40) {
+            downPressed = true;
         }
     }
 
-    function component(width, height, color, x, y) {
-        this.width = width;
-        this.height = height;
-        this.x = x;
-        this.y = y;
-        this.update = function(){
-            ctx = myGameArea.context;
-            ctx.fillStyle = color;
-            ctx.fillRect(this.x, this.y, this.width, this.height);
+    // Checks if keys were released
+    function keyUpHandler(e) {
+        if(e.keyCode === 39) {
+            rightPressed = false;
+        }
+        else if(e.keyCode === 37) {
+            leftPressed = false;
+        }
+        else if(e.keyCode === 38) {
+            upPressed = false;
+        }
+        else if(e.keyCode === 40) {
+            downPressed = false;
         }
     }
 
-    function updateGameArea() {
-        myGameArea.clear();
-        redGamePiece.x += 1;
-        yellowGamePiece.x += 1;
-        yellowGamePiece.y += 1;
-        blueGamePiece.x += 1;
-        blueGamePiece.y -= 1;
-        redGamePiece.update();
-        yellowGamePiece.update();
-        blueGamePiece.update();
+    // Draws character
+    function charDraw() {
+        ctx.beginPath();
+        ctx.rect(x, y, 20, 20);
+        ctx.fillStyle = "#0095dd";
+        ctx.fill();
+        ctx.closePath();
+
     }
+
+
+    // draws game
+    function draw(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        charDraw();
+
+
+        // If left key pressed
+        if(leftPressed) {
+            x -= 3;
+        }
+
+        // If right key pressed
+        if(rightPressed) {
+            x += 3;
+        }
+
+        // If up key pressed
+        if(upPressed) {
+            y -= 3;
+        }
+
+        // If down key pressed
+        if(downPressed) {
+            y += 3;
+        }
+
+    }
+
+    setInterval(draw, 10)
+
 </script>
-<p>The three components moves by changing the x- and y-coordinates on every update.</p>
+
 </body>
 </html>
