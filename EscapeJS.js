@@ -78,12 +78,14 @@ function draw(){
 
     // If up key pressed
     if(upPressed) {
-        y -= 3;
+        if (y-3>0)
+            y -= 3;
     }
 
     // If down key pressed
     if(downPressed) {
-        y += 3;
+        if(y+23<815)
+            y += 3;
     }
     CuttOff()
 }
