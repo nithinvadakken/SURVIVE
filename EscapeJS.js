@@ -83,9 +83,10 @@ function draw(){
 
 }
 function cuttoff() {
-    if x + 20=1400  {
+    if (x + 20===1400)  {
         upPressed = false;
     }
 }
 
 setInterval(draw, 10)
+
