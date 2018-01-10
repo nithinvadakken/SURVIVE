@@ -56,6 +56,9 @@ function charDraw() {
 
 
 // draws game
+
+
+
 function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     charDraw();
@@ -63,12 +66,14 @@ function draw(){
 
     // If left key pressed
     if(leftPressed) {
-        x -= 3;
+        if (x-3>0)
+            x -= 3;
     }
 
     // If right key pressed
     if(rightPressed) {
-        x += 3;
+        if(x-3<1400)
+            x += 3;
     }
 
     // If up key pressed
@@ -80,12 +85,8 @@ function draw(){
     if(downPressed) {
         y += 3;
     }
-
-}
-function cuttoff() {
-    if (x + 20===1400)  {
-        upPressed = false;
-    }
+    CuttOff()
 }
 
-setInterval(draw, 10)
+
+setInterval(draw, 10);
