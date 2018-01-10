@@ -72,7 +72,7 @@ function draw(){
 
     // If right key pressed
     if(rightPressed) {
-        if(x-3<1400)
+        if(x+23<1400)
             x += 3;
     }
 
