@@ -72,7 +72,7 @@ function draw(){
 
     // If right key pressed
     if(rightPressed) {
-        if(x+23<1400)
+        if(x+23<canvas.width)
             x += 3;
     }
 
@@ -84,7 +84,7 @@ function draw(){
 
     // If down key pressed
     if(downPressed) {
-        if(y+23<815)
+        if(y+23<canvas.height)
             y += 3;
     }
     CuttOff()
