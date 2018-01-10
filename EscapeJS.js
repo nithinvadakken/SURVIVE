@@ -56,11 +56,8 @@ function charDraw() {
 
 
 // draws game
-
-
-
 function draw(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.offsetWidth, canvas.height);
     charDraw();
 
 
@@ -87,7 +84,6 @@ function draw(){
         if(y+23<canvas.height)
             y += 3;
     }
-    CuttOff()
 }
 
 
