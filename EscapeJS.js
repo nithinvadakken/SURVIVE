@@ -1,5 +1,5 @@
 nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
-while (nametag === null){
+while (nametag == null){
     prompt( "Plase re-enter a valid name", "Wonjun Lee");
 }
 var canvas = document.getElementById("myCanvas");
