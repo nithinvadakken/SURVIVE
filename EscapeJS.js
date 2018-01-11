@@ -71,7 +71,6 @@ function draw(){
         if (x-spd>0) {
             x -= spd;
         }
-
     }
 
     // If right key pressed
