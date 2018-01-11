@@ -1,4 +1,5 @@
 nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
+
 while (nametag == null){
     prompt( "Plase re-enter a valid name", "Wonjun Lee");
 }
@@ -53,7 +54,7 @@ function keyUpHandler(e) {
 function charDraw() {
     ctx.beginPath();
     ctx.rect(x, y, 30, 30);
-    ctx.fillStyle = "#0095dd";
+    ctx.fillStyle = "#000000";
     ctx.fill();
     ctx.closePath();
 
