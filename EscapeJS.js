@@ -52,7 +52,7 @@ function keyUpHandler(e) {
 // Draws character
 function charDraw() {
     ctx.beginPath();
-    ctx.rect(x, y, 20, 20);
+    ctx.rect(x, y, 30, 30);
     ctx.fillStyle = "#0095dd";
     ctx.fill();
     ctx.closePath();
@@ -75,7 +75,7 @@ function draw(){
 
     // If right key pressed
     if(rightPressed) {
-        if(x+20+spd<canvas.width) {
+        if(x+30+spd<canvas.width) {
             x += spd;
         }
     }
@@ -90,7 +90,7 @@ function draw(){
 
     // If down key pressed
     if(downPressed) {
-        if(y+20+spd<canvas.height) {
+        if(y+30+spd<canvas.height) {
             y += spd;
         }
     }
