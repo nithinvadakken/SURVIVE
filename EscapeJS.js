@@ -75,7 +75,7 @@ function draw(){
     // If right key pressed
     if(rightPressed) {
         if(x+23<canvas.width) {
-            x += .3;
+            x += 3;
         }
     }
 
