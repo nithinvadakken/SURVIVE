@@ -1,4 +1,7 @@
-
+nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
+if (nametag === null || nametag === "") {
+    prompt("What is the name of your fellow explorer?", "Wonjun Lee");
+}
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var x = canvas.width/2;
