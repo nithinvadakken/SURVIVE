@@ -1,5 +1,5 @@
 nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
-while (nametag == null){
+while (nametag === null){
     prompt( "Plase re-enter a valid name", "Wonjun Lee");
 }
 var canvas = document.getElementById("myCanvas");
@@ -11,6 +11,8 @@ var rightPressed = false;
 var leftPressed = false;
 var upPressed = false;
 var downPressed = false;
+
+var spd = 3;
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -66,31 +68,30 @@ function draw(){
 
     // If left key pressed
     if(leftPressed) {
-        if (x-3>0) {
-            x -= 3;
+        if (x-spd>0) {
+            x -= spd;
         }
-
     }
 
     // If right key pressed
     if(rightPressed) {
-        if(x+23<canvas.width) {
-            x += 3;
+        if(x+20+spd<canvas.width) {
+            x += spd;
         }
     }
 
     // If up key pressed
     if(upPressed) {
-        if (y-3>0) {
-            y -= 3;
+        if (y-spd>0) {
+            y -= spd;
         }
 
     }
 
     // If down key pressed
     if(downPressed) {
-        if(y+23<canvas.height) {
-            y += 3;
+        if(y+20+spd<canvas.height) {
+            y += spd;
         }
     }
 }
