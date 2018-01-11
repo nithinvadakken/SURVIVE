@@ -66,26 +66,32 @@ function draw(){
 
     // If left key pressed
     if(leftPressed) {
-        if (x-3>0)
+        if (x-3>0) {
             x -= 3;
+        }
+
     }
 
     // If right key pressed
     if(rightPressed) {
-        if(x+23<canvas.width)
+        if(x+23<canvas.width) {
             x += 3;
+        }
     }
 
     // If up key pressed
     if(upPressed) {
-        if (y-3>0)
+        if (y-3>0) {
             y -= 3;
+        }
+
     }
 
     // If down key pressed
     if(downPressed) {
-        if(y+23<canvas.height)
+        if(y+23<canvas.height) {
             y += 3;
+        }
     }
 }
 
