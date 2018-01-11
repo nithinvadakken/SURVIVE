@@ -1,6 +1,6 @@
 nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
-if (nametag === null || nametag === "") {
-    prompt("What is the name of your fellow explorer?", "Wonjun Lee");
+while (nametag === null){
+    prompt( "Plase re-enter a valid name", "Wonjun Lee");
 }
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
@@ -24,7 +24,7 @@ function keyDownHandler(e) {
     }
     else if(e.keyCode === 37) {
         leftPressed = true;
-    }
+}
     else if(e.keyCode === 38) {
         upPressed = true;
     }
@@ -96,6 +96,10 @@ function draw(){
         }
     }
 }
+
+//function Wall(){
+
+//}
 
 
 setInterval(draw, 10);
