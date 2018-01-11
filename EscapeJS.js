@@ -1,6 +1,6 @@
 nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
-if (nametag === null || nametag === "") {
-    prompt("What is the name of your fellow explorer?", "Wonjun Lee");
+while (nametag === null){
+    prompt( "Plase re-enter a valid name", "Wonjun Lee");
 }
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
@@ -95,9 +95,9 @@ function draw(){
     }
 }
 
-function Wall(){
+//function Wall(){
 
-}
+//}
 
 
 setInterval(draw, 10);
