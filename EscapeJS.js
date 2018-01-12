@@ -3,10 +3,10 @@ nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
 if (nametag == null){
     nametag = prompt( "Plase re-enter a valid name", "Wonjun Lee");
 }
-var canvas = document.getElementById("myCanvas");
+var canvas = document.getElementById("maze.jpg");
 var ctx = canvas.getContext("2d");
-var x = canvas.width/2;
-var y = canvas.height/2;
+var x = 700/2;
+var y = 700/2;
 
 var rightPressed = false;
 var leftPressed = false;
