@@ -5,8 +5,8 @@ if (nametag == null){
 }
 var canvas = document.getElementById("maze.jpg");
 var ctx = canvas.getContext("2d");
-var x = 700/2;
-var y = 700/2;
+var x = canvas.width/2;
+var y = canvas.height/2;
 
 var rightPressed = false;
 var leftPressed = false;
