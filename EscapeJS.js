@@ -1,7 +1,9 @@
 nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
-while (nametag == null){
-    prompt( "Plase re-enter a valid name", "Wonjun Lee");
+if (nametag === " " || nametag == null){
+    nametag = prompt( "Plase re-enter a valid name", "Wonjun Lee");
 }
+
+var namecanvas = document.getElementById("id");
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var x = canvas.width/2;
@@ -12,14 +14,14 @@ var leftPressed = false;
 var upPressed = false;
 var downPressed = false;
 
-var spd = 3;
+var spd = 30;
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
 // Checks if keys are pressed
 function keyDownHandler(e) {
-    if(e.keyCode === 39) {
+    if(e.keyCode === 10) {
         rightPressed = true;
     }
     else if(e.keyCode === 37) {
