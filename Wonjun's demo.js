@@ -1,22 +1,28 @@
 nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
-
-while (nametag == null){
-    prompt( "Plase re-enter a valid name", "Wonjun Lee");
+if (nametag === null || nametag === "") {
+    nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
 }
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var x = canvas.width/2;
-var y = canvas.height/2;
+var canvas;
+var context;
+var x = 0;
+var y = 0;
 
 var rightPressed = false;
 var leftPressed = false;
 var upPressed = false;
 var downPressed = false;
 
-var spd = 3;
-
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+
+window.onload = function() {
+    canvas = document.getElementByID("myCanvas");
+    context = canvas.getContext("2d");
+
+    drawImage('easy_maze.png', 5, 5);
+
+    window.onkeydown = keyDownHandler;
+};
 
 // Checks if keys are pressed
 function keyDownHandler(e) {
@@ -25,7 +31,7 @@ function keyDownHandler(e) {
     }
     else if(e.keyCode === 37) {
         leftPressed = true;
-}
+    }
     else if(e.keyCode === 38) {
         upPressed = true;
     }
@@ -50,16 +56,6 @@ function keyUpHandler(e) {
     }
 }
 
-// Draws character
-function charDraw() {
-    ctx.beginPath();
-    ctx.rect(x, y, 30, 30);
-    ctx.fillStyle = "#000000";
-    ctx.fill();
-    ctx.closePath();
-
-}
-
 
 // draws game
 function draw(){
@@ -69,37 +65,70 @@ function draw(){
 
     // If left key pressed
     if(leftPressed) {
-        if (x-spd>0) {
-            x -= spd;
+        if (x-3>0) {
+            x -= .05;
         }
+
     }
 
     // If right key pressed
     if(rightPressed) {
-        if(x+30+spd<canvas.width) {
-            x += spd;
+        if(x+23<canvas.width) {
+            x += .05;
         }
     }
 
     // If up key pressed
     if(upPressed) {
-        if (y-spd>0) {
-            y -= spd;
+        if (y-3>0) {
+            y -= .05;
         }
 
     }
 
     // If down key pressed
     if(downPressed) {
-        if(y+30+spd<canvas.height) {
-            y += spd;
+        if(y+23<canvas.height) {
+            y += .05;
         }
     }
 }
 
-//function Wall(){
+function Wall(){
 
-//}
+}
+
 
 
 setInterval(draw, 10);
+var timer;
+
+function drawImage(fileName, startingX, startingY) {
+    //stop drawing image
+    clearTimeout(timer);
+
+    //draw maze
+    var imgMaze = new Image();
+    imgMaze.onload = function() {
+        // resize the canvas to maze
+        canvas.width = imgMaze.width;
+        canvas.height = imgMaze.height;
+
+        context.drawImage(imgMaze, 0.0);
+
+        x = startingX;
+        y = startingY;
+
+
+// Draws character
+        var char = context.rect(x, y, 5, 5);
+        context.drawImage(char, x, y);
+        context.stroke();
+
+        // draw next frame by 10 millieseconds
+        timer = setTimeout(drawFrame, 10)
+
+    };
+    imgMaze.src = fileName
+}
+
