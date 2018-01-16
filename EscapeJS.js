@@ -1,9 +1,9 @@
 nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
 
-while (nametag == null){
-    prompt( "Plase re-enter a valid name", "Wonjun Lee");
+if (nametag == null){
+    nametag = prompt( "Plase re-enter a valid name", "Wonjun Lee");
 }
-var canvas = document.getElementById("myCanvas");
+var canvas = document.getElementById("maze.jpg");
 var ctx = canvas.getContext("2d");
 var x = canvas.width/2;
 var y = canvas.height/2;
