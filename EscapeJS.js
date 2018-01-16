@@ -3,8 +3,14 @@ nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
 if (nametag == null){
     nametag = prompt( "Plase re-enter a valid name", "Wonjun Lee");
 }
-var canvas = document.getElementById("maze.jpg");
+
+
+var canvas = document.querySelector('canvas');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 var ctx = canvas.getContext("2d");
+
+
 var x = canvas.width/2;
 var y = canvas.height/2;
 
@@ -54,8 +60,9 @@ function keyUpHandler(e) {
 function charDraw() {
     ctx.beginPath();
     ctx.rect(x, y, 30, 30);
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = 'white';
     ctx.fill();
+    ctx.stroke();
     ctx.closePath();
 
 }
@@ -63,7 +70,7 @@ function charDraw() {
 
 // draws game
 function draw(){
-    ctx.clearRect(0, 0, canvas.offsetWidth, canvas.height);
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
     charDraw();
 
 
@@ -97,9 +104,6 @@ function draw(){
     }
 }
 
-//function Wall(){
-
-//}
-
-
 setInterval(draw, 10);
+
+new Wall(x, y);
