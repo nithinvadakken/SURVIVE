@@ -1,7 +1,7 @@
-nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
+nametag = prompt("What is the name of your fellow explorer?");
 
 if (nametag == null){
-    nametag = prompt( "Plase re-enter a valid name", "Wonjun Lee");
+    nametag = prompt( "Plase re-enter a valid name", "Wonjun");
 }
 
 
@@ -60,6 +60,8 @@ function keyUpHandler(e) {
 function charDraw() {
     ctx.beginPath();
     ctx.rect(x, y, 30, 30);
+    ctx.font = "15px Arial";
+    ctx.fillText(nametag, x + 7, y - 10);
     ctx.fillStyle = 'white';
     ctx.fill();
     ctx.stroke();
