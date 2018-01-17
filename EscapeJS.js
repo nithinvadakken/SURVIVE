@@ -70,7 +70,7 @@ rgba = 'rgba('+r+','+g+',0, 0.9)';
 function charDraw() {
     ctx.beginPath();
     ctx.rect(x, y, 30, 30);
-    ctx.font = "15px Arial";
+    ctx.font = "20px Arial";
     ctx.textAlign = "center";
     ctx.fillText(nametag, x + 15, y - 10);
     ctx.fillStyle = rgba;
