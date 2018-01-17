@@ -57,21 +57,21 @@
                 case 38:   // arrow up key
                 case 87: // W key
                     newX = currRectX;
-                    newY = currRectY - 3;
+                    newY = currRectY - 10;
                     break;
                 case 37: // arrow left key
                 case 65: // A key
-                    newX = currRectX - 3;
+                    newX = currRectX - 10;
                     newY = currRectY;
                     break;
                 case 40: // arrow down key
                 case 83: // S key
                     newX = currRectX;
-                    newY = currRectY + 3;
+                    newY = currRectY + 10;
                     break;
                 case 39: // arrow right key
                 case 68: // D key
-                    newX = currRectX + 3;
+                    newX = currRectX + 10;
                     newY = currRectY;
                     break;
                 default: return;
@@ -159,6 +159,21 @@
         drawMazeAndRectangle(425, 3);
         window.addEventListener("keydown", moveRect, true);
         createTimer(120); // 2 minutes
+
+        function Wall(x, y) {
+            this.x = x;
+            this.y = y;
+
+            this.line = function() {
+                ctx.beginPath();
+        }
+
+
+
+
+
+
+        }
     </script>
 </body>
 </html>
