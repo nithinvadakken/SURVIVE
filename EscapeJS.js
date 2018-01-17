@@ -1,7 +1,11 @@
-nametag = prompt("What is the name of your fellow explorer?");
+nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
 
-if (nametag == null){
-    nametag = prompt( "Plase re-enter a valid name", "Wonjun");
+if (nametag == null || nametag === "") {
+    nametag = prompt("Please re-enter a valid name", "Wonjun");
+}
+
+else if (nametag.length > 10) {
+    nametag = prompt("Name must be 10 or less characters :(");
 }
 
 
@@ -55,14 +59,20 @@ function keyUpHandler(e) {
         downPressed = false;
     }
 }
+//random color for rect
+
+r = Math.floor(Math.random() * 256);
+g = Math.floor(Math.random() * 256);
+rgba = 'rgba('+r+','+g+',0, 0.9)';
 
 // Draws character
 function charDraw() {
     ctx.beginPath();
     ctx.rect(x, y, 30, 30);
     ctx.font = "15px Arial";
-    ctx.fillText(nametag, x + 7, y - 10);
-    ctx.fillStyle = 'white';
+    ctx.textAlign = "center";
+    ctx.fillText(nametag, x + 15, y - 10);
+    ctx.fillStyle = rgba;
     ctx.fill();
     ctx.stroke();
     ctx.closePath();
