@@ -69,9 +69,15 @@ rgba = 'rgba('+r+','+g+',0, 0.9)';
 function charDraw() {
     ctx.beginPath();
     ctx.rect(x, y, 30, 30);
-    ctx.font = "15px Arial";
+    ctx.font = "20px Arial";
     ctx.textAlign = "center";
-    ctx.fillText(nametag, x + 15, y - 10);
+
+    if (y+100 < 0){
+        ctx.fillText(nametag, x + 15, y + 30);
+    }
+    else{
+        ctx.fillText(nametag, x + 15, y - 10);
+    }
     ctx.fillStyle = rgba;
     ctx.fill();
     ctx.stroke();
@@ -81,6 +87,8 @@ function charDraw() {
 
 
 // draws game
+
+
 function draw(){
     ctx.clearRect(0, 0, innerWidth, innerHeight);
     charDraw();
@@ -88,30 +96,49 @@ function draw(){
 
     // If left key pressed
     if(leftPressed) {
+        charDraw();
         if (x-spd>0) {
             x -= spd;
+            charDraw();
         }
     }
 
     // If right key pressed
     if(rightPressed) {
+        charDraw();
         if(x+30+spd<canvas.width) {
             x += spd;
+            charDraw();
+
         }
     }
 
     // If up key pressed
     if(upPressed) {
+        charDraw();
         if (y-spd>0) {
             y -= spd;
+            charDraw();
+            if (y+100 < 0){
+                ctx.fillText(nametag, x + 15, y + 30);
+            }
+            else{
+                ctx.fillText(nametag, x + 15, y - 10);
+            }
+
         }
 
     }
 
     // If down key pressed
     if(downPressed) {
+        charDraw();
         if(y+30+spd<canvas.height) {
             y += spd;
+            charDraw();
+            if (y + 100 < 0) {
+                ctx.fillText(nametag, x + 15, y + 30);
+            }
         }
     }
 }
