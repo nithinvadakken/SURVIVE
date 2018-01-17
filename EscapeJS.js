@@ -61,6 +61,7 @@ function keyUpHandler(e) {
 }
 //random color for rect
 
+
 r = Math.floor(Math.random() * 256);
 g = Math.floor(Math.random() * 256);
 rgba = 'rgba('+r+','+g+',0, 0.9)';
