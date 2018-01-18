@@ -75,11 +75,19 @@ function charDraw() {
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
 
-    if (y-50 > 0){
-        ctx.fillText(nametag, x + 15, y - 30);
+    if (y-50 < 0) {
+        if (x - 10 < 0) {
+            ctx.fillText(nametag, x + 300, y + 60);
+        }
+        if (x + 20 > innerWidth) {
+            ctx.fillText(nametag, x - 300, y + 60);
+        }
+        if (x-10>0 && x+20<innerWidth)
+        ctx.fillText(nametag, x + 15, y + 60);
+
     }
     else{
-        ctx.fillText(nametag, x + 15, y + 60);
+        ctx.fillText(nametag, x + 15, y - 30);
    }
     ctx.fillStyle = rgba;
     ctx.fill();
