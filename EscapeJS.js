@@ -69,8 +69,10 @@ rgba = 'rgba('+r+','+g+',0, 0.9)';
 // Draws character
 function charDraw() {
     ctx.beginPath();
-    ctx.rect(x, y, 30, 30);
-    ctx.font = "20px Arial";
+    ctx.fillStyle = rgba;
+    ctx.fillRect(x, y, 30, 30);
+
+    ctx.font = "15px Arial";
     ctx.textAlign = "center";
 
     if (y-50 > 0){
@@ -84,6 +86,16 @@ function charDraw() {
     ctx.stroke();
     ctx.closePath();
 
+
+}
+
+// walls
+function wall() {
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(700, 400, 50, 50);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fill();
+
 }
 
 // draws game
@@ -92,6 +104,7 @@ function charDraw() {
 function draw(){
     ctx.clearRect(0, 0, innerWidth, innerHeight);
     charDraw();
+    wall();
 
 
     // If left key pressed
