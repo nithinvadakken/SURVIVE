@@ -78,14 +78,20 @@ function charDraw() {
 
     if (y-50 < 0) {
         if (x - 10 < 0) {
-            ctx.fillText(nametag, x + 300, y + 60);
+            ctx.fillText(nametag, x + 50, y + 60);
         }
-        if (x + 20 > wid) {
-            ctx.fillText(nametag, x - 300, y + 60);
+        else if (x + 50> wid) {
+            ctx.fillText(nametag, x - 50, y + 60);
         }
-        if (x-10>0 && x+20<wid)
+        else if (x-10>0 && x+20<wid)
         ctx.fillText(nametag, x + 15, y + 60);
 
+    }
+    else if (x + 50> wid) {
+        ctx.fillText(nametag, x - 50, y - 30);
+    }
+    else if (x - 10 < 0) {
+        ctx.fillText(nametag, x + 50, y - 30);
     }
     else{
         ctx.fillText(nametag, x + 15, y - 30);
