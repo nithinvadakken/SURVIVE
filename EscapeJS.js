@@ -17,6 +17,7 @@ var ctx = canvas.getContext("2d");
 
 var x = canvas.width/2;
 var y = canvas.height/2;
+var wid = canvas.width;
 
 var rightPressed = false;
 var leftPressed = false;
@@ -79,10 +80,10 @@ function charDraw() {
         if (x - 10 < 0) {
             ctx.fillText(nametag, x + 300, y + 60);
         }
-        if (x + 20 > innerWidth) {
+        if (x + 20 > wid) {
             ctx.fillText(nametag, x - 300, y + 60);
         }
-        if (x-10>0 && x+20<innerWidth)
+        if (x-10>0 && x+20<wid)
         ctx.fillText(nametag, x + 15, y + 60);
 
     }
