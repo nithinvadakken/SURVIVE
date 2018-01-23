@@ -23,7 +23,7 @@ var spacePressed = false;
 var prevKey = 'up';
 
 var spd = 3;
-var bSpd = 50;
+var bSpd = 3;
 var x = canvas.width/2;
 var y = canvas.height/2;
 var bx = x;
@@ -151,7 +151,6 @@ function Bullet() {
         if (bx + 40 < canvas.width) {
             console.log("In if");
             bx += bSpd;
-        console.log(bx)
         }
 
     } else if (prevKey === 'left') {
@@ -160,12 +159,6 @@ function Bullet() {
         }
     }
 
-}
-
-
-//shoots bullet
-function shootBullet() {
-    repeat(Bullet, 100);
 }
 
 
@@ -178,7 +171,6 @@ function makeEnemy() {
 
 // draws game
 function draw() {
-    console.log(mana);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
     ctx.font = "20px Impact";
@@ -228,13 +220,9 @@ function draw() {
         ctx.beginPath();
         ctx.fillStyle = 'yellow';
         ctx.fillRect(bx + 10, by + 10, 20, 20);
-
-        shootBullet();
-        bx = x;
-        by = y;
+        Bullet();
 
         --mana;
-        console.log(mana);
         ctx.font = "20px Impact";
         ctx.fillText("MANA: " + mana, 50, 50);
     }
