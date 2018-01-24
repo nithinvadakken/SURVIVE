@@ -68,22 +68,22 @@ function processKey(e) {
     // (Ignore any other key.)
 
     // The up arrow was pressed, so move up.
-    if (e.keyCode == 38) {
+    if (e.keyCode === 38) {
         dy = -1;
     }
 
     // The down arrow was pressed, so move down.
-    if (e.keyCode == 40) {
+    if (e.keyCode === 40) {
         dy = 1;
     }
 
     // The left arrow was pressed, so move left.
-    if (e.keyCode == 37) {
+    if (e.keyCode === 37) {
         dx = -1;
     }
 
     // The right arrow was pressed, so move right.
-    if (e.keyCode == 39) {
+    if (e.keyCode === 39) {
         dx = 1;
     }
 }
@@ -101,11 +101,11 @@ function checkForCollision() {
         var alpha = pixels[i+3];
 
         // Look for black walls (which indicates a collision).
-        if (red == 0 && green == 0 && blue == 0) {
+        if (red === 0 && green === 0 && blue === 0) {
             return true;
         }
         // Look for gray edge space (which indicates a collision).
-        if (red == 169 && green == 169 && blue == 169) {
+        if (red === 169 && green === 169 && blue === 169) {
             return true;
         }
     }
@@ -116,13 +116,13 @@ function checkForCollision() {
 
 function drawFrame() {
     // Only draw a new frame if the face is moving.
-    if (dx != 0 || dy != 0) {
+    if (dx !== 0 || dy !== 0) {
         // Clear away the previous face position (but leave a yellow patch there,
         // to create the "trail" effect.)
         context.beginPath();
         context.fillStyle = "rgb(254,244,207)";
         context.rect(x, y, 15, 15);
-        context.fill()
+        context.fill();
 
         // Increment the face's position.
         x += dx;
