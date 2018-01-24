@@ -139,16 +139,23 @@ function Bullet() {
 
 // makes enemies
 
-function makeEnemy() {
+function makeEnemy(color) {
     r1 = Math.floor(Math.random() * 256);
     g1 = Math.floor(Math.random() * 256);
-    rg = 'rgba('+r1+','+g1+',0, 0.9)';
     ctx.beginPath();
-    ctx.fillStyle = rg;
+    ctx.fillStyle = color;
     ctx.fillRect(ex, ey, 30, 30);
     ctx.fillRect(ex1 , ey1 , 30, 30);
     ctx.fillRect(ex2, ey2, 30, 30);
+    enemy = {x: ex, y: ey, w: 30, h: 30};
+    enemy1 = {x: ex1, y: ey1, w: 30, h: 30};
+    enemy2 = {x: ex2, y: ey2, w: 30, h: 30};
+
+
+
 }
+
+
 //adds mana
 function addMana() {
     mana += 2;
@@ -165,7 +172,7 @@ function draw() {
     score++;
 
     charDraw();
-    makeEnemy();
+    makeEnemy("green");
 
     // Enemy movement
     ex += (x-ex)/100;
@@ -219,6 +226,9 @@ function draw() {
         --mana;
         ctx.font = "20px Impact";
         ctx.fillText("MANA: " + mana, 50, 50);
+        checkForCollision();
+        checkForCollision1();
+        checkForCollision2();
     }
     // Returns bullet to original position
     else {
@@ -228,6 +238,47 @@ function draw() {
 
 }
 
+function checkForCollision(){
+    if (enemy.x < bx + 40 &&
+        enemy.x + 30 > bx &&
+        enemy.y < by + 40 &&
+        30 + enemy.y > by) {
+
+        makeEnemy("purple");
+
+    } else {
+        makeEnemy("green");
+    }
+
+
+}
+function checkForCollision1(){
+    if (enemy1.x < bx + 40 &&
+        enemy1.x + 30 > bx &&
+        enemy1.y < by + 40 &&
+        30 + enemy1.y > by) {
+
+        makeEnemy("purple");
+
+    } else {
+        makeEnemy("green");
+    }
+
+
+}function checkForCollision2(){
+    if (enemy2.x < bx + 40 &&
+        enemy2.x + 30 > bx &&
+        enemy2.y < by + 40 &&
+        30 + enemy2.y > by) {
+
+        makeEnemy("purple");
+
+    } else {
+        makeEnemy("green");
+    }
+
+
+}
 // setInterval(charDraw, 1000);
 setInterval(draw, 10);
 setInterval(addMana, 1000);
