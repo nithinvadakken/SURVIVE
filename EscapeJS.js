@@ -94,6 +94,7 @@ function charDraw() {
     ctx.beginPath();
     ctx.fillStyle = rgba;
     ctx.fillRect(x, y, 30, 30);
+    char = {x: x, y: y, w: 30, h: 30};
 
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
@@ -159,14 +160,16 @@ function Bullet() {
         }
     }
 
+
 }
 
 
 // makes enemies
-function makeEnemy() {
+function makeEnemy(color) {
     ctx.beginPath();
-    ctx.fillStyle = 'blue';
+    ctx.fillStyle = color;
     ctx.fillRect(ex, ey, 30, 30);
+    enemy = {x: ex, y: ey, w: 30, h: 30};
 }
 
 // draws game
@@ -177,11 +180,11 @@ function draw() {
     ctx.fillText("MANA: " + mana, 50, 50);
 
     charDraw();
-    makeEnemy();
+    makeEnemy("green");
 
     // Enemy movement
-    ex += (x-ex)/100;
-    ey += (y-ey)/100;
+    ex += (x - ex) / 100;
+    ey += (y - ey) / 100;
 
     // Move left
     if (leftPressed) {
@@ -222,19 +225,36 @@ function draw() {
         ctx.fillRect(bx + 10, by + 10, 20, 20);
         Bullet();
 
+
         --mana;
         ctx.font = "20px Impact";
         ctx.fillText("MANA: " + mana, 50, 50);
+
+        checkForCollision();
     }
 
     // Returns bullet to original position
     else {
         bx = x;
         by = y;
-
         }
+
 
 }
 
+function checkForCollision(){
+    if (enemy.x < bx + 40 &&
+        enemy.x + 30 > bx &&
+        enemy.y < by + 40 &&
+        30 + enemy.y > by) {
+
+        makeEnemy("purple");
+
+    } else {
+        makeEnemy("green");
+    }
+
+
+}
 // setInterval(charDraw, 1000);
 setInterval(draw, 10);
