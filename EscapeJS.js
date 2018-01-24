@@ -107,7 +107,27 @@ function charDraw() {
 
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
-    ctx.fillText(nametag, x + 15, y - 30);
+    if (y-50 < 0) {
+        if (x - 10 < 0) {
+            ctx.fillText(nametag, x + 50, y + 60);
+        }
+        else if (x + 50> canvas.width) {
+            ctx.fillText(nametag, x - 50, y + 60);
+        }
+        else if (x-10>0 && x+20<canvas.width)
+            ctx.fillText(nametag, x + 15, y + 60);
+
+    }
+    else if (x + 50> canvas.width) {
+        ctx.fillText(nametag, x - 50, y - 30);
+    }
+    else if (x - 10 < 0) {
+        ctx.fillText(nametag, x + 50, y - 30);
+    }
+    else{
+        ctx.fillText(nametag, x + 15, y - 30);
+    }
+
 }
 // creates the bullet
 function Bullet() {
