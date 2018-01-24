@@ -5,15 +5,17 @@ if (nametag == null || nametag === "") {
     nametag = prompt("Please re-enter a valid name", "Wonjun");
 }
 
-else if (nametag.length > 10) {
+if (nametag.length > 10) {
     nametag = prompt("Name must be 10 or less characters :(");
 }
+
 
 
 // variables
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext("2d");
 var wid = canvas.width;
+var score = 0;
 
 var rightPressed = false;
 var leftPressed = false;
@@ -28,8 +30,15 @@ var x = canvas.width/2;
 var y = canvas.height/2;
 var bx = x;
 var by = y;
-var ex = 100;
-var ey = 100;
+// random placement of zombies
+var ex = Math.random() * (innerWidth - x * 2) + x;
+var ey = Math.random() * (innerHeight - y * 2) + y;
+
+var ex1 = Math.random() * (innerWidth - x * 2) + x;
+var ey1= Math.random() * (innerHeight - y * 2) + y;
+
+var ex2 = Math.random() * (innerWidth - x * 2) + x;
+var ey2 = Math.random() * (innerHeight - y * 2) + y;
 
 var mana = 100;
 
@@ -89,6 +98,8 @@ g = Math.floor(Math.random() * 256);
 rgba = 'rgba('+r+','+g+',0, 0.9)';
 
 
+
+
 // Draws character
 function charDraw() {
     ctx.beginPath();
@@ -98,41 +109,28 @@ function charDraw() {
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
 
-    if (y-50 < 0) {
+    if (y - 50 < 0) {
         if (x - 10 < 0) {
             ctx.fillText(nametag, x + 50, y + 60);
         }
-        else if (x + 50> wid) {
+        else if (x + 50 > wid) {
             ctx.fillText(nametag, x - 50, y + 60);
         }
-        else if (x-10>0 && x+20<wid) {
+        else if (x - 10 > 0 && x + 20 < wid) {
             ctx.fillText(nametag, x + 15, y + 60);
         }
 
     }
-    else if (x + 50> wid) {
+    else if (x + 50 > wid) {
         ctx.fillText(nametag, x - 50, y - 30);
     }
     else if (x - 10 < 0) {
-        ctx.fillText(nametag, x -50, y - 30);
+        ctx.fillText(nametag, x - 50, y - 30);
     }
-    else{
+    else {
         ctx.fillText(nametag, x + 15, y - 30);
     }
-
-    ctx.fillStyle = rgba;
-    ctx.fill();
-    ctx.stroke();
-    ctx.closePath();
 }
-
-
-// Causes a function to repeat x times
-function repeat(func, times) {
-    func();
-    --times && repeat(func, times);
-}
-
 
 // creates the bullet
 function Bullet() {
@@ -163,10 +161,20 @@ function Bullet() {
 
 
 // makes enemies
+
 function makeEnemy() {
+    r1 = Math.floor(Math.random() * 256);
+    g1 = Math.floor(Math.random() * 256);
+    rg = 'rgba('+r1+','+g1+',0, 0.9)';
     ctx.beginPath();
-    ctx.fillStyle = 'blue';
+    ctx.fillStyle = rg;
     ctx.fillRect(ex, ey, 30, 30);
+    ctx.fillRect(ex1 , ey1 , 30, 30);
+    ctx.fillRect(ex2, ey2, 30, 30);
+}
+//adds mana
+function addMana() {
+    mana += 2;
 }
 
 // draws game
@@ -174,7 +182,10 @@ function draw() {
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
     ctx.font = "20px Impact";
+    ctx.fillStyle = 'blue';
     ctx.fillText("MANA: " + mana, 50, 50);
+    ctx.fillText("Score: " + score, 50, 70);
+    score++;
 
     charDraw();
     makeEnemy();
@@ -182,6 +193,13 @@ function draw() {
     // Enemy movement
     ex += (x-ex)/100;
     ey += (y-ey)/100;
+
+    ex1 += (x-ex1)/100;
+    ey1 += (y-ey1)/100;
+
+    ex2 += (x-ex2)/100;
+    ey2 += (y-ey2)/100;
+
 
     // Move left
     if (leftPressed) {
@@ -221,20 +239,18 @@ function draw() {
         ctx.fillStyle = 'yellow';
         ctx.fillRect(bx + 10, by + 10, 20, 20);
         Bullet();
-
         --mana;
         ctx.font = "20px Impact";
         ctx.fillText("MANA: " + mana, 50, 50);
     }
-
     // Returns bullet to original position
     else {
         bx = x;
         by = y;
-
         }
 
 }
 
 // setInterval(charDraw, 1000);
 setInterval(draw, 10);
+setInterval(addMana, 1000);
