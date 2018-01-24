@@ -14,7 +14,6 @@ if (nametag.length > 10) {
 // variables
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext("2d");
-var wid = canvas.width;
 var score = 0;
 
 var rightPressed = false;
@@ -108,30 +107,8 @@ function charDraw() {
 
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
-
-    if (y - 50 < 0) {
-        if (x - 10 < 0) {
-            ctx.fillText(nametag, x + 50, y + 60);
-        }
-        else if (x + 50 > wid) {
-            ctx.fillText(nametag, x - 50, y + 60);
-        }
-        else if (x - 10 > 0 && x + 20 < wid) {
-            ctx.fillText(nametag, x + 15, y + 60);
-        }
-
-    }
-    else if (x + 50 > wid) {
-        ctx.fillText(nametag, x - 50, y - 30);
-    }
-    else if (x - 10 < 0) {
-        ctx.fillText(nametag, x - 50, y - 30);
-    }
-    else {
-        ctx.fillText(nametag, x + 15, y - 30);
-    }
+    ctx.fillText(nametag, x + 15, y - 30);
 }
-
 // creates the bullet
 function Bullet() {
     if (prevKey === 'up') {
