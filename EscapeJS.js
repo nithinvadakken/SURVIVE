@@ -179,9 +179,11 @@ function makeEnemy(color) {
 //adds mana
 function addMana() {
     mana += 2;
+
 }
 
 // draws game
+
 function draw() {
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
@@ -189,6 +191,7 @@ function draw() {
     ctx.fillStyle = 'blue';
     ctx.fillText("MANA: " + mana, 50, 50);
     ctx.fillText("Score: " + score, 50, 70);
+
     score++;
 
     charDraw();
@@ -246,6 +249,8 @@ function draw() {
         --mana;
         ctx.font = "20px Impact";
         ctx.fillText("MANA: " + mana, 50, 50);
+        ctx.beginPath();
+        ctx.fillText(wiktor, 100, 100);
         checkForCollision();
         checkForCollision1();
         checkForCollision2();
