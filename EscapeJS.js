@@ -10,35 +10,32 @@ if (nametag.length > 10) {
 }
 
 
-
-// variables
+// canvas
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext("2d");
 var score = 0;
 
+//key pressed
 var rightPressed = false;
 var leftPressed = false;
 var upPressed = false;
 var downPressed = false;
 var spacePressed = false;
+var firePressed = false;
 var prevKey = 'up';
 
+// movement
 var spd = 3;
 var bSpd = 3;
 var x = canvas.width/2;
 var y = canvas.height/2;
 var bx = x;
 var by = y;
-// random placement of zombies
-var ex = Math.random() * (innerWidth - x * 2) + x;
-var ey = Math.random() * (innerHeight - y * 2) + y;
+var enemies = [];
+var sx = 0;
+var sy = 0;
 
-var ex1 = Math.random() * (innerWidth - x * 2) + x;
-var ey1= Math.random() * (innerHeight - y * 2) + y;
-
-var ex2 = Math.random() * (innerWidth - x * 2) + x;
-var ey2 = Math.random() * (innerHeight - y * 2) + y;
-
+// features
 var mana = 100;
 
 canvas.width = window.innerWidth;
@@ -49,44 +46,50 @@ document.addEventListener("keyup", keyUpHandler, false);
 
 // Checks if keys are pressed
 function keyDownHandler(e) {
-    if(e.keyCode === 39) {
+    if(e.keyCode === 68) {
         rightPressed = true;
         prevKey = 'right';
     }
-    else if(e.keyCode === 37) {
+    else if(e.keyCode === 65) {
         leftPressed = true;
         prevKey = 'left';
     }
-    else if(e.keyCode === 38) {
+    else if(e.keyCode === 87) {
         upPressed = true;
         prevKey = 'up';
     }
-    else if(e.keyCode === 40) {
+    else if(e.keyCode === 83) {
         downPressed = true;
         prevKey = 'down';
     }
     else if(e.keyCode === 32) {
         spacePressed = true;
     }
+    else if (e.keyCode === 80) {
+        firePressed = true;
+    }
 }
 
 
 // Checks if keys were released
 function keyUpHandler(e) {
-    if(e.keyCode === 39) {
+    if(e.keyCode === 68) {
         rightPressed = false;
     }
-    else if(e.keyCode === 37) {
+    else if(e.keyCode === 65) {
         leftPressed = false;
     }
-    else if(e.keyCode === 38) {
+    else if(e.keyCode === 87) {
         upPressed = false;
     }
-    else if(e.keyCode === 40) {
+    else if(e.keyCode === 83) {
         downPressed = false;
     }
     else if(e.keyCode === 32) {
         spacePressed = false;
+    }
+    else if (e.keyCode === 80) {
+        firePressed = false;
     }
 }
 
@@ -95,8 +98,8 @@ function keyUpHandler(e) {
 r = Math.floor(Math.random() * 256);
 g = Math.floor(Math.random() * 256);
 rgba = 'rgba('+r+','+g+',0, 0.9)';
-
-
+var r1 = Math.floor(Math.random() * 256);
+var g1 = Math.floor(Math.random() * 256);
 
 
 // Draws character
@@ -107,28 +110,10 @@ function charDraw() {
 
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
-    if (y-50 < 0) {
-        if (x - 10 < 0) {
-            ctx.fillText(nametag, x + 50, y + 60);
-        }
-        else if (x + 50> canvas.width) {
-            ctx.fillText(nametag, x - 50, y + 60);
-        }
-        else if (x-10>0 && x+20<canvas.width)
-            ctx.fillText(nametag, x + 15, y + 60);
-
-    }
-    else if (x + 50> canvas.width) {
-        ctx.fillText(nametag, x - 50, y - 30);
-    }
-    else if (x - 10 < 0) {
-        ctx.fillText(nametag, x + 50, y - 30);
-    }
-    else{
-        ctx.fillText(nametag, x + 15, y - 30);
-    }
-
+    ctx.fillText(nametag, x + 15, y - 30);
 }
+
+
 // creates the bullet
 function Bullet() {
     if (prevKey === 'up') {
@@ -142,9 +127,7 @@ function Bullet() {
         }
 
     } else if (prevKey === 'right') {
-        console.log(bx);
         if (bx + 40 < canvas.width) {
-            console.log("In if");
             bx += bSpd;
         }
 
@@ -153,37 +136,97 @@ function Bullet() {
             bx -= bSpd;
         }
     }
-
 }
 
 
-// makes enemies
-
-function makeEnemy(color) {
-    r1 = Math.floor(Math.random() * 256);
-    g1 = Math.floor(Math.random() * 256);
-    ctx.beginPath();
-    ctx.fillStyle = color;
-    ctx.fillRect(ex, ey, 30, 30);
-    ctx.fillRect(ex1 , ey1 , 30, 30);
-    ctx.fillRect(ex2, ey2, 30, 30);
-    enemy = {x: ex, y: ey, w: 30, h: 30};
-    enemy1 = {x: ex1, y: ey1, w: 30, h: 30};
-    enemy2 = {x: ex2, y: ey2, w: 30, h: 30};
-
-
-
+// Random number generator
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
 }
 
 
 //adds mana
 function addMana() {
     mana += 2;
-
 }
 
-// draws game
 
+// makes sword
+function makeSword() {
+    ctx.beginPath();
+    ctx.fillStyle = 'gray';
+
+    if (prevKey === 'left') {
+        sx = x-30;
+        sy = y+30;
+        ctx.fillRect(sx, sy, 30, 10);
+    }
+
+    else if (prevKey === 'right') {
+        sx = x+30;
+        sy = y-10;
+        ctx.fillRect(sx, sy, 30, 10)
+    }
+
+    else if (prevKey === 'up') {
+        sx = x-10;
+        sy = y-30;
+        ctx.fillRect(sx, sy, 10, 30)
+    }
+
+    else if (prevKey === 'down') {
+        sx = x+30;
+        sy = y+30;
+        ctx.fillRect(sx, sy, 10, 30)
+    }
+}
+
+
+// enemy class
+class Enemy {
+    constructor(ex, ey) {
+        this.x = ex;
+        this.y = ey;
+    }
+
+    makeEnemy() {
+        this.rg = 'rgba('+r1+','+g1+',0, 0.9)';
+        ctx.beginPath();
+        ctx.fillStyle = this.rg;
+        ctx.fillRect(this.x, this.y, 30, 30);
+
+        this.x += (x-this.x)/100;
+        this.y += (y-this.y)/100;
+    }
+}
+
+
+//waves of enemies
+function summonWaves() {
+    var wave = getRandomInt(1, 2);
+    for (var j = 0; j < wave+1; j ++) {
+        var ex = getRandomInt(0, canvas.width);
+        var ey = getRandomInt(0, canvas.height);
+        enemies.push(new Enemy(ex, ey));
+    }
+}
+
+
+// makes enemies
+function enemyCharge() {
+    summonWaves();
+}
+
+
+// update enemy position
+function enemyUpdate(){
+    for (k=0; k<enemies.length; k++) {enemies[k].makeEnemy()}
+}
+
+
+// draws game
 function draw() {
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
@@ -191,22 +234,13 @@ function draw() {
     ctx.fillStyle = 'blue';
     ctx.fillText("MANA: " + mana, 50, 50);
     ctx.fillText("Score: " + score, 50, 70);
-
     score++;
 
     charDraw();
-    makeEnemy("green");
+    enemyUpdate();
 
-    // Enemy movement
-    ex += (x-ex)/100;
-    ey += (y-ey)/100;
-
-    ex1 += (x-ex1)/100;
-    ey1 += (y-ey1)/100;
-
-    ex2 += (x-ex2)/100;
-    ey2 += (y-ey2)/100;
-
+    // Sword
+    if (spacePressed) {makeSword()}
 
     // Move left
     if (leftPressed) {
@@ -237,7 +271,7 @@ function draw() {
     }
 
     // Bullet shoot
-    if (spacePressed && mana > 0) {
+    if (firePressed && mana > 0) {
         ctx.beginPath();
         ctx.fillStyle = 'red';
         ctx.fillRect(bx, by, 40, 40);
@@ -248,62 +282,19 @@ function draw() {
         Bullet();
         --mana;
         ctx.font = "20px Impact";
+        ctx.fillStyle = 'red';
         ctx.fillText("MANA: " + mana, 50, 50);
-        ctx.beginPath();
-        ctx.fillText(wiktor, 100, 100);
-        checkForCollision();
-        checkForCollision1();
-        checkForCollision2();
     }
+
     // Returns bullet to original position
     else {
         bx = x;
         by = y;
-        }
-
+    }
 }
 
-function checkForCollision(){
-    if (enemy.x < bx + 40 &&
-        enemy.x + 30 > bx &&
-        enemy.y < by + 40 &&
-        30 + enemy.y > by) {
-
-        makeEnemy("purple");
-
-    } else {
-        makeEnemy("green");
-    }
-
-
-}
-function checkForCollision1(){
-    if (enemy1.x < bx + 40 &&
-        enemy1.x + 30 > bx &&
-        enemy1.y < by + 40 &&
-        30 + enemy1.y > by) {
-
-        makeEnemy("purple");
-
-    } else {
-        makeEnemy("green");
-    }
-
-
-}function checkForCollision2(){
-    if (enemy2.x < bx + 40 &&
-        enemy2.x + 30 > bx &&
-        enemy2.y < by + 40 &&
-        30 + enemy2.y > by) {
-
-        makeEnemy("purple");
-
-    } else {
-        makeEnemy("green");
-    }
-
-
-}
-// setInterval(charDraw, 1000);
 setInterval(draw, 10);
 setInterval(addMana, 1000);
+setInterval(enemyCharge, 1000);
+
+
