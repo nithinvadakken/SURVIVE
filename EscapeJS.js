@@ -1,8 +1,8 @@
 // asks user for name
-nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
+nametag = prompt("What is the name of your fellow explorer?", "Unknown");
 
 if (nametag == null || nametag === "") {
-    nametag = prompt("Please re-enter a valid name", "Wonjun");
+    nametag = prompt("Please re-enter a valid name", "Unknown");
 }
 
 if (nametag.length > 10) {
@@ -31,12 +31,17 @@ var x = canvas.width/2;
 var y = canvas.height/2;
 var bx = x;
 var by = y;
-var enemies = [];
 var sx = 0;
 var sy = 0;
+var dog = 250;
 
 // features
-var mana = 100;
+var mana = 500;
+var health = 40;
+
+// spawn
+var enemies = [];
+var enemies_temp = [];
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -197,32 +202,57 @@ class Enemy {
         ctx.fillStyle = this.rg;
         ctx.fillRect(this.x, this.y, 30, 30);
 
-        this.x += (x-this.x)/100;
-        this.y += (y-this.y)/100;
+        this.x += (x-this.x)/dog;
+        this.y += (y-this.y)/dog;
     }
 }
 
 
 //waves of enemies
 function summonWaves() {
-    var wave = getRandomInt(1, 2);
+    var wave = getRandomInt(3, 5);
     for (var j = 0; j < wave+1; j ++) {
         var ex = getRandomInt(0, canvas.width);
         var ey = getRandomInt(0, canvas.height);
         enemies.push(new Enemy(ex, ey));
+        enemies_temp.push(new Enemy(ex, ey));
     }
-}
-
-
-// makes enemies
-function enemyCharge() {
-    summonWaves();
 }
 
 
 // update enemy position
 function enemyUpdate(){
-    for (k=0; k<enemies.length; k++) {enemies[k].makeEnemy()}
+    for (k=0; k<enemies.length; k++) {
+        enemies[k].makeEnemy();
+    }
+}
+
+
+// remove stackers
+function deleteThee() {
+    for (q=0; q<11; q++) {enemies.shift();}
+}
+
+
+// health bar
+function HealthBar() {
+    if (health>0) {
+        ctx.beginPath();
+        ctx.fillStyle = 'red';
+        ctx.fillRect(x-5, y+40, health, 10);
+    }
+}
+
+
+// Kill da doods
+function EnemyKillRemove() {
+    enemies_temp = enemies;
+    for (g=0; g<enemies_temp.length; g++) {
+        if ((Math.abs(enemies[g].x - bx) < 30) && (Math.abs(enemies[g].y - by) < 30)) {
+            enemies.splice(g, 1);
+        }
+    }
+    enemies_temp = enemies;
 }
 
 
@@ -238,6 +268,8 @@ function draw() {
 
     charDraw();
     enemyUpdate();
+    HealthBar();
+    EnemyKillRemove();
 
     // Sword
     if (spacePressed) {makeSword()}
@@ -291,10 +323,24 @@ function draw() {
         bx = x;
         by = y;
     }
+
+    // Collision
+    for (z=0; z < enemies.length; z++) {
+        if ((Math.abs(enemies[z].x - x) < 30) && (Math.abs(enemies[z].y - y) < 30)) {
+            health = health - 0.5;
+        }
+        if (health <= 0) {
+            window.location.reload();
+        }
+    }
+
+    // Reload when dead
+    if (health <= 0) {window.location.reload();}
 }
 
 setInterval(draw, 10);
 setInterval(addMana, 1000);
-setInterval(enemyCharge, 1000);
+setInterval(summonWaves, 500);
+setInterval(deleteThee, 3000);
 
 

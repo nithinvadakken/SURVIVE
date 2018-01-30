@@ -6,7 +6,8 @@ body {  padding: 0;
 canvas {
     display: block;
     margin: 0 auto;
-    background: black;}
+    background: black;
+}
     .size {
         width: 50vw;
         height: 50vh;
