@@ -7,9 +7,10 @@ canvas {
     display: block;
     margin: 0 auto;
     background: black;}
-    .size {
-        width: 50vw;
-        height: 50vh;
-    }
+.size {
+    width: 50vw;
+    height: 50vh;}
+
+
 
 

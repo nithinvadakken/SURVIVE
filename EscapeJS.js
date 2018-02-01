@@ -2,7 +2,7 @@
 nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
 
 if (nametag == null || nametag === "") {
-    nametag = prompt("Please re-enter a valid name", "Wonjun");
+    nametag = prompt("Please re-enter a valid name", "Wonjun Lee");
 }
 
 if (nametag.length > 10) {
@@ -26,23 +26,43 @@ var prevKey = 'up';
 
 // movement
 var spd = 3;
-var bSpd = 3;
 var x = canvas.width/2;
 var y = canvas.height/2;
 var bx = x;
 var by = y;
-var enemies = [];
-var sx = 0;
-var sy = 0;
+var dog = 250;
 
 // features
-var mana = 100;
+var mana = 600;
+var health = 40;
+
+// spawn
+var enemies = [];
+var enemies_temp = [];
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
+//color array for enemies
+
+var colorArray = [
+    '#838CFF',
+    '#4A33E8',
+    '#4479FF',
+    '#33B0E8',
+    '#46FCFF'
+];
+
+//color array for bomb
+var bombColor = [
+    "#BD2404",
+    "#750401",
+    "#F26105",
+    "#F59018",
+    "#F5BC0C"
+];
 
 // Checks if keys are pressed
 function keyDownHandler(e) {
@@ -88,56 +108,19 @@ function keyUpHandler(e) {
     else if(e.keyCode === 32) {
         spacePressed = false;
     }
-    else if (e.keyCode === 80) {
-        firePressed = false;
-    }
 }
-
-
-//random color for rect
-r = Math.floor(Math.random() * 256);
-g = Math.floor(Math.random() * 256);
-rgba = 'rgba('+r+','+g+',0, 0.9)';
-var r1 = Math.floor(Math.random() * 256);
-var g1 = Math.floor(Math.random() * 256);
-
 
 // Draws character
 function charDraw() {
     ctx.beginPath();
-    ctx.fillStyle = rgba;
+    ctx.fillStyle = "orange";
     ctx.fillRect(x, y, 30, 30);
 
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
     ctx.fillText(nametag, x + 15, y - 30);
+
 }
-
-
-// creates the bullet
-function Bullet() {
-    if (prevKey === 'up') {
-        if (by > 0) {
-            by -= bSpd;
-        }
-
-    } else if (prevKey === 'down') {
-        if (by + 40< canvas.height) {
-            by += bSpd;
-        }
-
-    } else if (prevKey === 'right') {
-        if (bx + 40 < canvas.width) {
-            bx += bSpd;
-        }
-
-    } else if (prevKey === 'left') {
-        if (bx > 0) {
-            bx -= bSpd;
-        }
-    }
-}
-
 
 // Random number generator
 function getRandomInt(min, max) {
@@ -149,82 +132,88 @@ function getRandomInt(min, max) {
 
 //adds mana
 function addMana() {
-    mana += 2;
-}
-
-
-// makes sword
-function makeSword() {
-    ctx.beginPath();
-    ctx.fillStyle = 'gray';
-
-    if (prevKey === 'left') {
-        sx = x-30;
-        sy = y+30;
-        ctx.fillRect(sx, sy, 30, 10);
-    }
-
-    else if (prevKey === 'right') {
-        sx = x+30;
-        sy = y-10;
-        ctx.fillRect(sx, sy, 30, 10)
-    }
-
-    else if (prevKey === 'up') {
-        sx = x-10;
-        sy = y-30;
-        ctx.fillRect(sx, sy, 10, 30)
-    }
-
-    else if (prevKey === 'down') {
-        sx = x+30;
-        sy = y+30;
-        ctx.fillRect(sx, sy, 10, 30)
+    mana += 40;
+    if (mana > 600){
+        mana = 600;
     }
 }
-
 
 // enemy class
 class Enemy {
     constructor(ex, ey) {
         this.x = ex;
         this.y = ey;
+        this.color = colorArray[Math.floor(Math.random() * colorArray.length)]
     }
 
     makeEnemy() {
-        this.rg = 'rgba('+r1+','+g1+',0, 0.9)';
         ctx.beginPath();
-        ctx.fillStyle = this.rg;
+        ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, 30, 30);
 
-        this.x += (x-this.x)/100;
-        this.y += (y-this.y)/100;
+        this.x += (x-this.x)/dog;
+        this.y += (y-this.y)/dog;
     }
 }
 
 
 //waves of enemies
 function summonWaves() {
-    var wave = getRandomInt(1, 2);
+    var wave = getRandomInt(3, 5);
     for (var j = 0; j < wave+1; j ++) {
         var ex = getRandomInt(0, canvas.width);
         var ey = getRandomInt(0, canvas.height);
         enemies.push(new Enemy(ex, ey));
+        enemies_temp.push(new Enemy(ex, ey));
     }
-}
-
-
-// makes enemies
-function enemyCharge() {
-    summonWaves();
 }
 
 
 // update enemy position
 function enemyUpdate(){
-    for (k=0; k<enemies.length; k++) {enemies[k].makeEnemy()}
+    for (k=0; k<enemies.length; k++) {
+        enemies[k].makeEnemy();
+    }
 }
 
+
+// remove stackers
+function deleteThee() {
+    for (q=0; q<11; q++) {enemies.shift();}
+}
+
+
+// health bar
+function HealthBar() {
+    if (health>0) {
+        ctx.beginPath();
+        ctx.fillStyle = 'red';
+        ctx.fillRect(x-5, y+40, health, 10);
+    }
+}
+
+
+// Kill da doods
+function EnemyKillRemove() {
+    enemies_temp = enemies;
+    for (g=0; g<enemies_temp.length; g++) {
+        if ((Math.abs(enemies[g].x - bx) < 30) && (Math.abs(enemies[g].y - by) < 30)) {
+            enemies.splice(g, 1);
+        }
+    }
+    enemies_temp = enemies;
+}
+
+// creates the bomb
+function Bomb() {
+    ctx.beginPath();
+    ctx.fillStyle = bombColor[Math.floor(Math.random() * colorArray.length)];
+    ctx.fillRect(bx, by, 40, 40);
+
+    ctx.beginPath();
+    ctx.fillStyle = bombColor[Math.floor(Math.random() * colorArray.length)];
+    ctx.fillRect(bx + 10, by + 10, 20, 20);
+}
 
 // draws game
 function draw() {
@@ -232,15 +221,14 @@ function draw() {
 
     ctx.font = "20px Impact";
     ctx.fillStyle = 'blue';
-    ctx.fillText("MANA: " + mana, 50, 50);
+    ctx.fillText("Mana: " + mana, 50, 50);
     ctx.fillText("Score: " + score, 50, 70);
     score++;
 
     charDraw();
     enemyUpdate();
-
-    // Sword
-    if (spacePressed) {makeSword()}
+    HealthBar();
+    EnemyKillRemove();
 
     // Move left
     if (leftPressed) {
@@ -270,31 +258,33 @@ function draw() {
         }
     }
 
-    // Bullet shoot
+    // bomb drop
     if (firePressed && mana > 0) {
-        ctx.beginPath();
-        ctx.fillStyle = 'red';
-        ctx.fillRect(bx, by, 40, 40);
-
-        ctx.beginPath();
-        ctx.fillStyle = 'yellow';
-        ctx.fillRect(bx + 10, by + 10, 20, 20);
-        Bullet();
-        --mana;
-        ctx.font = "20px Impact";
-        ctx.fillStyle = 'red';
-        ctx.fillText("MANA: " + mana, 50, 50);
-    }
+        Bomb();
+        mana -= 1;
+        }
 
     // Returns bullet to original position
     else {
         bx = x;
         by = y;
     }
+
+    // Collision
+    for (z=0; z < enemies.length; z++) {
+        if ((Math.abs(enemies[z].x - x) < 30) && (Math.abs(enemies[z].y - y) < 30)) {
+            health = health - 0.5;
+        }
+        if (health <= 0) {
+            window.location.reload();
+        }
+    }
+
+    // Reload when dead
+    if (health <= 0) {window.location.reload();}
 }
 
 setInterval(draw, 10);
-setInterval(addMana, 1000);
-setInterval(enemyCharge, 1000);
-
-
+setInterval(addMana, 2000);
+setInterval(summonWaves, 500);
+setInterval(deleteThee, 3000);
