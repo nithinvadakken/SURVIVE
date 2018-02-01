@@ -288,3 +288,4 @@ setInterval(draw, 10);
 setInterval(addMana, 2000);
 setInterval(summonWaves, 500);
 setInterval(deleteThee, 3000);
+
