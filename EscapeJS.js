@@ -33,12 +33,15 @@ var by = y;
 var dog = 250;
 
 // features
-var mana = 600;
 var health = 40;
+var bombCount = 300;
+var bombDropped = false;
 
 // spawn
 var enemies = [];
 var enemies_temp = [];
+var bombs =[];
+var bombs_temp = [];
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -130,14 +133,6 @@ function getRandomInt(min, max) {
 }
 
 
-//adds mana
-function addMana() {
-    mana += 40;
-    if (mana > 600){
-        mana = 600;
-    }
-}
-
 // enemy class
 class Enemy {
     constructor(ex, ey) {
@@ -204,16 +199,37 @@ function EnemyKillRemove() {
     enemies_temp = enemies;
 }
 
-// creates the bomb
-function Bomb() {
-    ctx.beginPath();
-    ctx.fillStyle = bombColor[Math.floor(Math.random() * colorArray.length)];
-    ctx.fillRect(bx, by, 40, 40);
 
-    ctx.beginPath();
-    ctx.fillStyle = bombColor[Math.floor(Math.random() * colorArray.length)];
-    ctx.fillRect(bx + 10, by + 10, 20, 20);
+// bomb class
+class Bomb {
+    constructor(bx, by) {
+        this.x = bx;
+        this.y = by;
+        this.color = bombColor[Math.floor(Math.random() * colorArray.length)]
+    }
+
+    makeBomb() {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.fillRect(bx + 10, by + 10, 20, 20);
+    }
 }
+
+
+// summon bombs
+function summonBomb(bx, by) {
+    bombs.push(new Bomb(bx, by));
+    bombs_temp.push(new Bomb(bx, by));
+}
+
+
+// bomb update
+function bombUpdate() {
+    for (u=0; u<bombs.length; u++) {
+        bombs[u].makeBomb();
+    }
+}
+
 
 // draws game
 function draw() {
@@ -221,7 +237,6 @@ function draw() {
 
     ctx.font = "20px Impact";
     ctx.fillStyle = 'blue';
-    ctx.fillText("Mana: " + mana, 50, 50);
     ctx.fillText("Score: " + score, 50, 70);
     score++;
 
@@ -259,10 +274,10 @@ function draw() {
     }
 
     // bomb drop
-    if (firePressed && mana > 0) {
-        Bomb();
-        mana -= 1;
-        }
+    if (firePressed) {
+        summonBomb(x, y);
+        bombUpdate();
+    }
 
     // Returns bullet to original position
     else {
@@ -271,21 +286,22 @@ function draw() {
     }
 
     // Collision
-    for (z=0; z < enemies.length; z++) {
+    for (z=0; z < enemies_temp.length; z++) {
         if ((Math.abs(enemies[z].x - x) < 30) && (Math.abs(enemies[z].y - y) < 30)) {
-            health = health - 0.5;
+            health = health - 1;
+            enemies.shift();
         }
         if (health <= 0) {
             window.location.reload();
         }
     }
+    enemies_temp = enemies;
 
     // Reload when dead
     if (health <= 0) {window.location.reload();}
 }
 
 setInterval(draw, 10);
-setInterval(addMana, 2000);
 setInterval(summonWaves, 500);
 setInterval(deleteThee, 3000);
 
