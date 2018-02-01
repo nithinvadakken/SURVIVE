@@ -11,6 +11,9 @@ canvas {
     width: 50vw;
     height: 50vh;}
 
-
+.myCanvas{
+    background-image: url("https://media.giphy.com/media/ZiDpJRogbB9V6/giphy.gif");
+    background-repeat: repeat;
+}
 
 
