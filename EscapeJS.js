@@ -117,7 +117,7 @@ function keyUpHandler(e) {
 function charDraw() {
     ctx.beginPath();
     ctx.fillStyle = "orange";
-    ctx.fillRect(x, y, 30, 30);
+    ctx.fillRect(x, y, 10, 10);
 
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
