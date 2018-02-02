@@ -117,7 +117,7 @@ function keyUpHandler(e) {
 function charDraw() {
     ctx.beginPath();
     ctx.fillStyle = "orange";
-    ctx.fillRect(x, y, 10, 10);
+    ctx.fillRect(x, y, 30, 30);
 
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
@@ -325,6 +325,13 @@ function draw() {
     // Reload when dead
 
 }
+function levelmaker() {
+    dog *= 3/4;
+    spd += .75;
+}
+
+setInterval(levelmaker,15000);
+
 
 setInterval(draw, 10);
 setInterval(summonWaves, 500);
