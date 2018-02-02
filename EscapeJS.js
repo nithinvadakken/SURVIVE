@@ -121,7 +121,26 @@ function charDraw() {
 
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
-    ctx.fillText(nametag, x + 15, y - 30);
+    if (y - 50 < 0) {
+        if (x - 10 < 0) {
+            ctx.fillText(nametag, x + 50, y + 60);
+        }
+        else if (x + 50 > canvas.width) {
+            ctx.fillText(nametag, x - 50, y + 60);
+        }
+        else if (x - 10 > 0 && x + 20 < canvas.width) {
+            ctx.fillText(nametag, x + 15, y + 60);
+        }
+    }
+    else if (x + 50 > canvas.width) {
+        ctx.fillText(nametag, x - 50, y - 30);
+    }
+    else if (x - 10 < 0) {
+        ctx.fillText(nametag, x + 50, y - 30);
+    }
+    else {
+        ctx.fillText(nametag, x + 15, y - 30);
+    }
 
 }
 
@@ -185,6 +204,10 @@ function HealthBar() {
         ctx.fillStyle = 'red';
         ctx.fillRect(x-5, y+40, health, 10);
     }
+    if (health < 0 ){
+        prompt("Your score was "+ score, "GLHF");
+
+    }
 }
 
 
@@ -238,7 +261,9 @@ function draw() {
     ctx.font = "20px Impact";
     ctx.fillStyle = 'blue';
     ctx.fillText("Score: " + score, 50, 70);
-    score++;
+    if (health > 0 ) {
+        score++;
+    }
 
     charDraw();
     enemyUpdate();
@@ -298,7 +323,7 @@ function draw() {
     enemies_temp = enemies;
 
     // Reload when dead
-    if (health <= 0) {window.location.reload();}
+
 }
 
 setInterval(draw, 10);

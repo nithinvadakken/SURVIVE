@@ -9,10 +9,10 @@ if (nametag.length > 10) {
     nametag = prompt("Name must be 10 or less characters :(");
 }
 
-
+var timer = 0;
 
 // variables
-level = 1;
+level = 50;
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext("2d");
 var score = 0;
@@ -30,7 +30,18 @@ var x = canvas.width/2;
 var y = canvas.height/2;
 var bx = x;
 var by = y;
+var bulletx = x;
+var bullety = y;
 // random placement of zombies
+my_xlist = [];
+my_ylist = [];
+var please_work = 0;
+while(please_work < level){
+    // random placement of zombies
+    my_xlist.push(Math.random() * (innerWidth - x * 2) + x);
+    my_ylist.push(Math.random() * (innerHeight - y * 2) + y);
+    please_work +=1;
+}
 var ex = Math.random() * (innerWidth - x * 2) + x;
 var ey = Math.random() * (innerHeight - y * 2) + y;
 
@@ -69,6 +80,9 @@ function keyDownHandler(e) {
     else if(e.keyCode === 32) {
         spacePressed = true;
     }
+    if (e.keyCode === 191){
+        slashPressed = true;
+    }
 }
 
 
@@ -88,6 +102,9 @@ function keyUpHandler(e) {
     }
     else if(e.keyCode === 32) {
         spacePressed = false;
+    }
+    if (e.keyCode === 191){
+        slashPressed = false;
     }
 }
 
@@ -130,54 +147,94 @@ function charDraw() {
     }
 }
 
+function imma_try_to_make_bullets() {
+
+    abx = x;
+    aby = y;
+    if (slashPressed && prevKey === 'left') {
+        while(abx+20 >0){
+            ctx.beginPath();
+            ctx.fillStyle = "#42f4ce";
+            ctx.fillRect(abx, aby, 20, 20);
+            abx -= 1
+        }
+    }
+    else if (slashPressed && prevKey === 'right') {
+        while(abx-20 < canvas.width){
+            ctx.beginPath();
+            ctx.fillStyle = "#42f4ce";
+            ctx.fillRect(abx, aby, 20, 20);
+            abx += 3
+        }
+    }
+    else if (slashPressed && prevKey === 'up') {
+        while(aby+20 >0){
+            ctx.beginPath();
+            ctx.fillStyle = "#42f4ce";
+            ctx.fillRect(abx, aby, 20, 20);
+            aby -= 3
+        }
+    }
+    else if (slashPressed && prevKey === 'down') {
+        while(aby-20 < canvas.height){
+            ctx.beginPath();
+            ctx.fillStyle = "#42f4ce";
+            ctx.fillRect(abx, aby, 20, 20);
+            aby += 3
+        }
+    }
+
+}
+
+
 function makeEnemy(aa, ab, list_number) {
     enx = aa;
     eny = ab;
 
 
 
+    ctx.beginPath();
+    ctx.fillRect(enx, eny, 30, 30);
+    if (enx < x) {
+        enx += 1;
         ctx.beginPath();
         ctx.fillRect(enx, eny, 30, 30);
-        if (enx < x) {
-            enx += 1;
-            ctx.beginPath();
-            ctx.fillRect(enx, eny, 30, 30);
-        }
-        if (enx > x) {
-            enx -= 1;
-            ctx.beginPath();
-            ctx.fillRect(enx, eny, 30, 30);
-        }
-        if (eny < y) {
-            eny += 1;
-            ctx.beginPath();
-            ctx.fillRect(enx, eny, 30, 30);
-        }
-        if (eny > y) {
-            eny -= 1;
-            ctx.beginPath();
-            ctx.fillRect(enx, eny, 30, 30);
-        }
+    }
+    if (enx > x) {
+        enx -= 1;
+        ctx.beginPath();
+        ctx.fillRect(enx, eny, 30, 30);
+    }
+    if (eny < y) {
+        eny += 1;
+        ctx.beginPath();
+        ctx.fillRect(enx, eny, 30, 30);
+    }
+    if (eny > y) {
+        eny -= 1;
+        ctx.beginPath();
+        ctx.fillRect(enx, eny, 30, 30);
+    }
 
-        // ctx.font = "20px Impact";
-        // ctx.fillText("Health: " + HP, 50, 100);
-        // if (enx +15 > x-15  && enx -15 < x +15 && eny +15 > y-15  && eny -15 < y +15) {
-        //     HP -= 1;
-        //     ctx.font = "20px Impact";
-        //     ctx.fillText("Health: " + HP, 50, 100);
-        //     ctx.beginPath();
-        //     ctx.fillStyle = "red";
-        //     ctx.fillRect(enx, eny, 30, 30);
-        //
-        // }
-        // else if (eny +15 > y-15  && eny -15 < y +15) {
-        //     HP -= 1;
-        //     ctx.font = "20px Impact";
-        //     ctx.fillText("Health: " + HP, 50, 100);
-        //     ctx.beginPath();
-        //     ctx.fillStyle = "red";
-        //     ctx.fillRect(enx, eny, 30, 30);
-        // }
+    // ctx.font = "20px Impact";
+    // ctx.fillText("Health: " + HP, 50, 100);
+    // if (enx +15 > x-15  && enx -15 < x +15 && eny +15 > y-15  && eny -15 < y +15) {
+    //     HP -= 1;
+    //     ctx.font = "20px Impact";
+    //     ctx.fillText("Health: " + HP, 50, 100);
+    //     ctx.beginPath();
+    //     ctx.fillStyle = "red";
+    //     ctx.fillRect(enx, eny, 30, 30);
+    //
+    // }
+    // else if (eny +15 > y-15  && eny -15 < y +15) {
+    //     HP -= 1;
+    //     ctx.font = "20px Impact";
+    //     ctx.fillText("Health: " + HP, 50, 100);
+    //     ctx.beginPath();
+    //     ctx.fillStyle = "red";
+    //     ctx.fillRect(enx, eny, 30, 30);
+    // }
 
     my_xlist[list_number] = enx;
     my_ylist[list_number] = eny;
@@ -223,31 +280,31 @@ function makeEnemy(aa, ab, list_number) {
 //     }
 // }
 // creates the bullet
-// function Bullet() {
-//     if (prevKey === 'up') {
-//         if (by > 0) {
-//             by -= bSpd;
-//         }
-//
-//     } else if (prevKey === 'down') {
-//         if (by + 40< canvas.height) {
-//             by += bSpd;
-//         }
-//
-//     } else if (prevKey === 'right') {
-//         console.log(bx);
-//         if (bx + 40 < canvas.width) {
-//             console.log("In if");
-//             bx += bSpd;
-//         }
-//
-//     } else if (prevKey === 'left') {
-//         if (bx > 0) {
-//             bx -= bSpd;
-//         }
-//     }
-//
-// }
+function Bullet() {
+    if (prevKey === 'up') {
+        if (by > 0) {
+            by -= bSpd;
+        }
+
+    } else if (prevKey === 'down') {
+        if (by + 40< canvas.height) {
+            by += bSpd;
+        }
+
+    } else if (prevKey === 'right') {
+        console.log(bx);
+        if (bx + 40 < canvas.width) {
+            console.log("In if");
+            bx += bSpd;
+        }
+
+    } else if (prevKey === 'left') {
+        if (bx > 0) {
+            bx -= bSpd;
+        }
+    }
+
+}
 
 
 // makes enemies
@@ -268,10 +325,13 @@ function makeEnemy(aa, ab, list_number) {
 //}
 
 
+//MAKE BULLETS
+
+
 //adds mana
-// function addMana() {
-//     mana += 2;
-// }
+function addMana() {
+    mana += 2;
+}
 
 // draws game
 
@@ -332,11 +392,14 @@ function makeEnemy(aa, ab, list_number) {
 //
 //
 // }
-my_xlist = [200,300,500,450];
-my_ylist = [200, 300, 500, 450];
-newx = 200;
-newy = 200;
+
+
+
+
+
 function draw() {
+
+
 
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
@@ -344,13 +407,21 @@ function draw() {
     ctx.fillStyle = 'blue';
     ctx.fillText("MANA: " + mana, 50, 50);
     ctx.fillText("Score: " + score, 50, 70);
+
+
+
     score++;
 
     charDraw();
-    makeEnemy(my_xlist[0], my_ylist[0],0);
-    makeEnemy(my_xlist[1], my_ylist[1],1);
-    makeEnemy(my_xlist[2], my_ylist[2],2);
+
+
+
+
+    for (ab = 0; ab < level; ab++){
+        makeEnemy(my_xlist[ab],my_ylist[ab],ab)
+    }
     //checkHP(2);
+
 
 
 
@@ -367,6 +438,7 @@ function draw() {
 
 
     // Move left
+
     if (leftPressed) {
         if (x - spd > 0) {
             x -= spd;
@@ -404,6 +476,7 @@ function draw() {
         ctx.fillStyle = 'yellow';
         ctx.fillRect(bx + 10, by + 10, 20, 20);
         Bullet();
+
         --mana;
         ctx.font = "20px Impact";
         ctx.fillText("MANA: " + mana, 50, 50);
@@ -416,6 +489,9 @@ function draw() {
         by = y;
     }
 
+    if (slashPressed && timer % 2 === 0){
+        imma_try_to_make_bullets()
+    }
 }
 
 
@@ -458,9 +534,9 @@ function draw() {
 //         makeEnemy("green");
 //     }
 
-
-
-// setInterval(charDraw, 1000);
-
+function maketime() {
+    timer +=1;
+}
 setInterval(draw, 10);
 setInterval(addMana, 1000);
+setInterval(maketime,1000);

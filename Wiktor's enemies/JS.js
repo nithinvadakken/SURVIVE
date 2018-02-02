@@ -129,9 +129,6 @@ function charDraw() {
         ctx.fillText(nametag, x + 15, y - 30);
     }
 }
-eny = -10;
-enx = -10;
-
 function makeEnemy(ab, i) {
         if (ab < -2 && i < -2) {
             ab = Math.floor((Math.random() * canvas.width) + 1);
