@@ -1,12 +1,30 @@
-// asks user for name
-nametag = prompt("What is the name of your fellow explorer?", "Wonjun Lee");
-
-if (nametag == null || nametag === "") {
-    nametag = prompt("Please re-enter a valid name", "Wonjun Lee");
+//asks for username
+function getCookie(cookiename) {
+    var name = cookiename + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
 
-if (nametag.length > 10) {
-    nametag = prompt("Name must be 10 or less characters :(");
+function checkCookie() {
+    nametag = getCookie("username");
+    if (nametag != "") {
+        alert("Back for more, " + nametag + "?");
+    } else {
+        nametag = prompt("Please enter an appropriate user name:", "Wonjun Lee");
+        if (nametag != "" && nametag != null) {
+            setCookie("username", nametag, 365);
+        }
+    }
 }
 
 
@@ -38,6 +56,7 @@ var bombCount = 300;
 var bombDropped = false;
 var level = 1;
 
+
 // spawn
 var enemies = [];
 var enemies_temp = [];
@@ -68,12 +87,17 @@ var bombColor = [
     "#F5BC0C"
 ];
 
+function setCookie(cookiename, val, expiration) {
+    var d = new Date();
+    d.setTime(d.getTime() + (expiration*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cookiename + "=" + val + ";" + expiration + ";path=/";
+}
 
 // give health
 function giveHealth() {
     ++health;
 }
-
 
 // Checks if keys are pressed
 function keyDownHandler(e) {
@@ -275,6 +299,7 @@ function bombUpdate() {
 
 // draws game
 function draw() {
+
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
     ctx.font = "20px Impact";
@@ -332,7 +357,6 @@ function draw() {
         by = y;
         console.log("Yup");
         summonBomb(bx, by);
-
     }
 
     // Collision
@@ -345,12 +369,11 @@ function draw() {
     enemies_temp = enemies;
 
     if (health <= 0) {
-        prompt("Your score was "+ score, "GLHF");
+        confirm("Your score was "+ score, "GLHF");
         health = 40;
         window.location.reload();
     }
 }
-
 
 //Makes the game go faster
 function levelmaker() {
@@ -376,7 +399,7 @@ setInterval(deleteThee, 4000);
 +---------------------+
 1. Nithin- 28200
 2. Wiktor- 25000
-3.
+3. Marvin - 14674
 4.
 
  */
