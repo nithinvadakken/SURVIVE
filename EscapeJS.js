@@ -9,7 +9,6 @@ if (nametag.length > 10) {
     nametag = prompt("Name must be 10 or less characters :(");
 }
 
-
 // canvas
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext("2d");
@@ -34,14 +33,10 @@ var dog = 250;
 
 // features
 var health = 40;
-var bombCount = 300;
-var bombDropped = false;
 
 // spawn
 var enemies = [];
 var enemies_temp = [];
-var bombs =[];
-var bombs_temp = [];
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -190,12 +185,10 @@ function enemyUpdate(){
     }
 }
 
-
 // remove stackers
 function deleteThee() {
     for (q=0; q<11; q++) {enemies.shift();}
 }
-
 
 // health bar
 function HealthBar() {
@@ -203,10 +196,6 @@ function HealthBar() {
         ctx.beginPath();
         ctx.fillStyle = 'red';
         ctx.fillRect(x-5, y+40, health, 10);
-    }
-    if (health < 0 ){
-        prompt("Your score was "+ score, "GLHF");
-
     }
 }
 
@@ -238,29 +227,13 @@ class Bomb {
     }
 }
 
-
-// summon bombs
-function summonBomb(bx, by) {
-    bombs.push(new Bomb(bx, by));
-    bombs_temp.push(new Bomb(bx, by));
-}
-
-
-// bomb update
-function bombUpdate() {
-    for (u=0; u<bombs.length; u++) {
-        bombs[u].makeBomb();
-    }
-}
-
-
 // draws game
 function draw() {
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
-    ctx.font = "20px Impact";
-    ctx.fillStyle = 'blue';
-    ctx.fillText("Score: " + score, 50, 70);
+    ctx.font = "25px Impact";
+    ctx.fillStyle = 'red';
+    ctx.fillText("Score: " + score, 70, 70);
     if (health > 0 ) {
         score++;
     }
@@ -298,16 +271,13 @@ function draw() {
         }
     }
 
-    // bomb drop
-    if (firePressed) {
-        summonBomb(x, y);
-        bombUpdate();
+    for (i = 0; i <= 10; i++){
+        bombArray.push(new Bomb())
     }
 
-    // Returns bullet to original position
-    else {
-        bx = x;
-        by = y;
+    // bomb drop
+    if (firePressed && bombArray.length > 0) {
+
     }
 
     // Collision
@@ -323,7 +293,6 @@ function draw() {
     enemies_temp = enemies;
 
     // Reload when dead
-
 }
 function levelmaker() {
     dog *= 3/4;
