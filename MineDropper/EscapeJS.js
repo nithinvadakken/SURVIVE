@@ -9,6 +9,7 @@ if (nametag.length > 10) {
     nametag = prompt("Name must be 10 or less characters :(");
 }
 
+
 // canvas
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext("2d");
@@ -33,10 +34,15 @@ var dog = 250;
 
 // features
 var health = 40;
+var bombCount = 300;
+var bombDropped = false;
+var level = 1;
 
 // spawn
 var enemies = [];
 var enemies_temp = [];
+var bombs =[];
+var bombs_temp = [];
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -61,6 +67,13 @@ var bombColor = [
     "#F59018",
     "#F5BC0C"
 ];
+
+
+// give health
+function giveHealth() {
+    ++health;
+}
+
 
 // Checks if keys are pressed
 function keyDownHandler(e) {
@@ -105,6 +118,9 @@ function keyUpHandler(e) {
     }
     else if(e.keyCode === 32) {
         spacePressed = false;
+    }
+    else if (e.keyCode === 80) {
+        firePressed = false;
     }
 }
 
@@ -185,10 +201,14 @@ function enemyUpdate(){
     }
 }
 
-// remove stackers
+
+// remove "clouds"
 function deleteThee() {
-    for (q=0; q<11; q++) {enemies.shift();}
+    if (enemies.length > 80) {
+        for (q=0; q<20; q++) {enemies.shift();}
+    } else {for (q=0; q<4; q++) {enemies.shift();}}
 }
+
 
 // health bar
 function HealthBar() {
@@ -197,18 +217,6 @@ function HealthBar() {
         ctx.fillStyle = 'red';
         ctx.fillRect(x-5, y+40, health, 10);
     }
-}
-
-
-// Kill da doods
-function EnemyKillRemove() {
-    enemies_temp = enemies;
-    for (g=0; g<enemies_temp.length; g++) {
-        if ((Math.abs(enemies[g].x - bx) < 30) && (Math.abs(enemies[g].y - by) < 30)) {
-            enemies.splice(g, 1);
-        }
-    }
-    enemies_temp = enemies;
 }
 
 
@@ -223,17 +231,64 @@ class Bomb {
     makeBomb() {
         ctx.beginPath();
         ctx.fillStyle = this.color;
-        ctx.fillRect(bx + 10, by + 10, 20, 20);
+        ctx.fillRect(this.x + 10, this.y + 10, 30, 30);
+
+        for (cow=0; cow<enemies.length; cow++) {
+            if ((Math.abs(enemies[g].x - this.x) < 30) && (Math.abs(enemies[g].y - this.y) < 30)) {
+                for (woc=0; woc<enemies.length; woc++) {
+                    if ((Math.abs(enemies[woc].x - this.x) < 80) && (Math.abs(enemies[woc].y - this.y) < 80)) {
+                        enemies.splice(woc, 1)
+                    }
+                }
+            }
+        }
     }
 }
+
+
+// Kill da doods
+function EnemyKillRemove() {
+    enemies_temp = enemies;
+    for (g=0; g<enemies_temp.length; g++) {
+        if ((Math.abs(enemies[g].x - x) < 30) && (Math.abs(enemies[g].y - y) < 30)) {
+            enemies.splice(g, 1);
+        }
+    }
+}
+
+
+// summon bombs
+function summonBomb(bx, by) {
+    bomb = new Bomb(bx, by);
+    bomb.makeBomb()
+}
+
+/*
+// bomb update
+function bombUpdate() {
+    for (u=0; u<bombs.length; u++) {
+        bombs[u].makeBomb();
+    }
+
+}
+*/
 
 // draws game
 function draw() {
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
-    ctx.font = "25px Impact";
+    ctx.font = "20px Impact";
+    ctx.fillStyle = 'blue';
+    ctx.fillText("Health: " + health, 50, 40);
+
+    ctx.font = "20px Impact";
     ctx.fillStyle = 'red';
-    ctx.fillText("Score: " + score, 70, 70);
+    ctx.fillText("Score: " + score, 50, 60);
+
+    ctx.font = "20px Impact";
+    ctx.fillStyle = 'blue';
+    ctx.fillText("Level: " + level, 50, 80);
+
     if (health > 0 ) {
         score++;
     }
@@ -271,38 +326,58 @@ function draw() {
         }
     }
 
-    for (i = 0; i <= 10; i++){
-        bombArray.push(new Bomb())
-    }
-
     // bomb drop
-    if (firePressed && bombArray.length > 0) {
+    if (firePressed) {
+        bx = x;
+        by = y;
+        console.log("Yup");
+        summonBomb(bx, by);
 
     }
 
     // Collision
     for (z=0; z < enemies_temp.length; z++) {
         if ((Math.abs(enemies[z].x - x) < 30) && (Math.abs(enemies[z].y - y) < 30)) {
-            health = health - 1;
+            health = health - 0.5;
             enemies.shift();
-        }
-        if (health <= 0) {
-            window.location.reload();
         }
     }
     enemies_temp = enemies;
 
-    // Reload when dead
+    if (health <= 0) {
+        prompt("Your score was "+ score, "GLHF");
+        health = 40;
+        window.location.reload();
+    }
 }
+
+
+//Makes the game go faster
 function levelmaker() {
+    level++;
     dog *= 3/4;
     spd += .75;
+    ctx.font = "20px Impact";
+    ctx.fillStyle = 'blue';
+    ctx.fillText("Level: " + level, 50, 80);
 }
 
-setInterval(levelmaker,15000);
-
-
+setInterval(levelmaker,30000);
 setInterval(draw, 10);
+setInterval(giveHealth, 10000);
 setInterval(summonWaves, 500);
-setInterval(deleteThee, 3000);
+setInterval(deleteThee, 4000);
+
+
+/*
+
++---------------------+
+|  DEV LEADERBOARD:   |
++---------------------+
+1. Nithin- 28200
+2. Wiktor- 25000
+3.
+4.
+
+ */
 
