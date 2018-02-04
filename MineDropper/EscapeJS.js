@@ -1,4 +1,15 @@
 //asks for username
+nametag = prompt("Please enter an appropriate user name:");
+
+while (nametag == null || nametag == "" || nametag.length < 1){
+    nametag = prompt("Please enter a valid username:");
+    if (nametag.length > 10){
+        nametag = prompt("Please enter a username that is no more than 10 characters")
+    }
+}
+
+
+
 function getCookie(cookiename) {
     var name = cookiename + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -16,11 +27,10 @@ function getCookie(cookiename) {
 }
 
 function checkCookie() {
-    nametag = getCookie("username");
-    if (nametag != "") {
+    var name = getCookie("username");
+    if (name === nametag) {
         alert("Back for more, " + nametag + "?");
     } else {
-        nametag = prompt("Please enter an appropriate user name:", "Wonjun Lee");
         if (nametag != "" && nametag != null) {
             setCookie("username", nametag, 365);
         }
