@@ -350,6 +350,9 @@ function draw() {
         window.location.reload();
     }
 }
+
+
+//Makes the game go faster
 function levelmaker() {
     level++;
     dog *= 3/4;
