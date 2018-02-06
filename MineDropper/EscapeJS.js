@@ -419,7 +419,7 @@ function levelmaker() {
     ctx.fillText("Level: " + level, 50, 80);
 }
 
-setInterval(levelmaker,30000);
+setInterval(levelmaker,15000);
 setInterval(draw, 10);
 setInterval(giveHealth, 10000);
 setInterval(summonWaves, 500);
