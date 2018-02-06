@@ -286,19 +286,12 @@ function EnemyKillRemove() {
 // Apple
 function appleSpawn() {
     ctx.beginPath();
-    var golden = getRandomInt(0, 100);
-    if (golden>80) {
-        ctx.fillStyle = '#e2c259';
-        ctx.fillRect(ax, ay + 10, 30, 30);
-    }
-    else {
-        ctx.fillStyle = '#e21638';
-        ctx.fillRect(ax, ay + 10, 30, 30);
-    }
+    ctx.fillStyle = '#e21638';
+    ctx.fillRect(ax, ay + 10, 30, 30)
+
     if ((Math.abs(ax-x) < 30) && (Math.abs(ay-y) < 30)) {
         if (health < 40) {
-            if (golden>80) {health=40}
-            else {health++;}
+            health ++;
         }
         ax = getRandomInt(90, canvas.width-30);
         ay = getRandomInt(90, canvas.height-30);
