@@ -48,7 +48,6 @@ var rightPressed = false;
 var leftPressed = false;
 var upPressed = false;
 var downPressed = false;
-var spacePressed = false;
 var firePressed = false;
 var prevKey = 'up';
 
@@ -62,9 +61,9 @@ var dog = 250;
 
 // features
 var health = 40;
-var bombCount = 300;
-var bombDropped = false;
 var level = 1;
+var ax = getRandomInt(90, canvas.width-30);
+var ay = getRandomInt(90, canvas.height-30);
 
 
 // spawn
@@ -79,7 +78,6 @@ document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
 //color array for enemies
-
 var colorArray = [
     '#838CFF',
     '#4A33E8',
@@ -111,26 +109,23 @@ function giveHealth() {
 
 // Checks if keys are pressed
 function keyDownHandler(e) {
-    if(e.keyCode === 68) {
+    if(e.keyCode === 68 || e.keyCode === 39) {
         rightPressed = true;
         prevKey = 'right';
     }
-    else if(e.keyCode === 65) {
+    else if(e.keyCode === 65 || e.keyCode === 37) {
         leftPressed = true;
         prevKey = 'left';
     }
-    else if(e.keyCode === 87) {
+    else if(e.keyCode === 87 || e.keyCode === 38) {
         upPressed = true;
         prevKey = 'up';
     }
-    else if(e.keyCode === 83) {
+    else if(e.keyCode === 83 || e.keyCode === 40) {
         downPressed = true;
         prevKey = 'down';
     }
-    else if(e.keyCode === 32) {
-        spacePressed = true;
-    }
-    else if (e.keyCode === 80) {
+    else if (e.keyCode === 80 || e.keyCode === 32) {
         firePressed = true;
     }
 }
@@ -138,22 +133,19 @@ function keyDownHandler(e) {
 
 // Checks if keys were released
 function keyUpHandler(e) {
-    if(e.keyCode === 68) {
+    if(e.keyCode === 68 || e.keyCode === 39) {
         rightPressed = false;
     }
-    else if(e.keyCode === 65) {
+    else if(e.keyCode === 65 || e.keyCode === 37) {
         leftPressed = false;
     }
-    else if(e.keyCode === 87) {
+    else if(e.keyCode === 87 || e.keyCode === 38) {
         upPressed = false;
     }
-    else if(e.keyCode === 83) {
+    else if(e.keyCode === 83 || e.keyCode === 40) {
         downPressed = false;
     }
-    else if(e.keyCode === 32) {
-        spacePressed = false;
-    }
-    else if (e.keyCode === 80) {
+    else if (e.keyCode === 80 || e.keyCode === 32) {
         firePressed = false;
     }
 }
@@ -259,23 +251,13 @@ class Bomb {
     constructor(bx, by) {
         this.x = bx;
         this.y = by;
-        this.color = bombColor[Math.floor(Math.random() * colorArray.length)]
+        this.color = bombColor[Math.floor(Math.random() * colorArray.length)];
     }
 
     makeBomb() {
         ctx.beginPath();
         ctx.fillStyle = this.color;
-        ctx.fillRect(this.x + 10, this.y + 10, 30, 30);
-
-        for (cow=0; cow<enemies.length; cow++) {
-            if ((Math.abs(enemies[g].x - this.x) < 30) && (Math.abs(enemies[g].y - this.y) < 30)) {
-                for (woc=0; woc<enemies.length; woc++) {
-                    if ((Math.abs(enemies[woc].x - this.x) < 80) && (Math.abs(enemies[woc].y - this.y) < 80)) {
-                        enemies.splice(woc, 1)
-                    }
-                }
-            }
-        }
+        ctx.fillRect(this.x + 10, this.y + 10, 20, 20);
     }
 }
 
@@ -288,24 +270,62 @@ function EnemyKillRemove() {
             enemies.splice(g, 1);
         }
     }
+
+    for (cow=0; cow<enemies.length; cow++) {
+        if ((Math.abs(enemies[cow].x - bx) < 30) && (Math.abs(enemies[cow].y - by) < 30)) {
+            for (woc=0; woc<enemies.length; woc++) {
+                if ((Math.abs(enemies[woc].x - bx) < 80) && (Math.abs(enemies[woc].y - by) < 80)) {
+                    enemies.splice(woc, 1);
+                }
+            }
+        }
+    }
+}
+
+
+// Apple
+function appleSpawn() {
+    ctx.beginPath();
+    var golden = getRandomInt(0, 100);
+    if (golden>80) {
+        ctx.fillStyle = '#e2c259';
+        ctx.fillRect(ax, ay + 10, 30, 30);
+    }
+    else {
+        ctx.fillStyle = '#e21638';
+        ctx.fillRect(ax, ay + 10, 30, 30);
+    }
+    if ((Math.abs(ax-x) < 30) && (Math.abs(ay-y) < 30)) {
+        if (health < 40) {
+            if (golden>80) {health=40}
+            else {health++;}
+        }
+        ax = getRandomInt(90, canvas.width-30);
+        ay = getRandomInt(90, canvas.height-30);
+    }
 }
 
 
 // summon bombs
 function summonBomb(bx, by) {
-    bomb = new Bomb(bx, by);
-    bomb.makeBomb()
+    setTimeout(function timerDelay() {
+        if (bombs.length < 3) {
+            bombs.push(new Bomb(bx, by));
+            bombs_temp.push(new Bomb(bx, by));
+        }
+    }, 5000);
 }
 
-/*
+
 // bomb update
 function bombUpdate() {
-    for (u=0; u<bombs.length; u++) {
-        bombs[u].makeBomb();
-    }
-
+    setTimeout(function Useless() {
+        for (u = 0; u < bombs.length; u++) {
+            bombs[u].makeBomb();
+        }
+    }, 5000);
 }
-*/
+
 
 // draws game
 function draw() {
@@ -332,6 +352,8 @@ function draw() {
     enemyUpdate();
     HealthBar();
     EnemyKillRemove();
+    //bombUpdate();
+    appleSpawn();
 
     // Move left
     if (leftPressed) {
@@ -362,12 +384,14 @@ function draw() {
     }
 
     // bomb drop
+    /*
     if (firePressed) {
         bx = x;
         by = y;
         console.log("Yup");
-        summonBomb(bx, by);
+        setTimeout(summonBomb(bx, by), 3000);
     }
+    */
 
     // Collision
     for (z=0; z < enemies_temp.length; z++) {
@@ -388,8 +412,8 @@ function draw() {
 //Makes the game go faster
 function levelmaker() {
     level++;
-    dog *= 3/4;
-    spd += .75;
+    dog *= 3.5/4;
+    spd += .45;
     ctx.font = "20px Impact";
     ctx.fillStyle = 'blue';
     ctx.fillText("Level: " + level, 50, 80);
@@ -399,7 +423,7 @@ setInterval(levelmaker,30000);
 setInterval(draw, 10);
 setInterval(giveHealth, 10000);
 setInterval(summonWaves, 500);
-setInterval(deleteThee, 4000);
+setInterval(deleteThee, 5000);
 
 
 /*
