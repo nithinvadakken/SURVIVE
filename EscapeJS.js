@@ -59,6 +59,7 @@ var health = 40;
 var level = 1;
 var ax = getRandomInt(90, canvas.width-30);
 var ay = getRandomInt(90, canvas.height-30);
+var maxlevel = 10;
 
 
 // spawn
@@ -282,11 +283,12 @@ function EnemyKillRemove() {
 function appleSpawn() {
     ctx.beginPath();
     ctx.fillStyle = '#e21638';
-    ctx.fillRect(ax, ay + 10, 30, 30)
+    ctx.fillRect(ax, ay + 10, 30, 30);
 
     if ((Math.abs(ax-x) < 30) && (Math.abs(ay-y) < 30)) {
         if (health < 40) {
             health ++;
+            score += 100;
         }
         ax = getRandomInt(90, canvas.width-30);
         ay = getRandomInt(90, canvas.height-30);
@@ -331,10 +333,6 @@ function draw() {
     ctx.font = "20px Impact";
     ctx.fillStyle = 'blue';
     ctx.fillText("Level: " + level, 50, 80);
-
-    if (health > 0 ) {
-        score++;
-    }
 
     charDraw();
     enemyUpdate();
@@ -400,6 +398,9 @@ function draw() {
 //Makes the game go faster
 function levelmaker() {
     level++;
+    if (level > maxlevel){
+        level = maxlevel;
+    }
     dog *= 3.5/4;
     spd += .45;
     ctx.font = "20px Impact";
