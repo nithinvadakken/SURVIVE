@@ -100,7 +100,9 @@ function setCookie(cookiename, val, expiration) {
 
 // give health
 function giveHealth() {
-    if (health<40) {health++;}
+    if (health<40) {
+        health++;
+    }
 }
 
 // Checks if keys are pressed
@@ -288,8 +290,8 @@ function appleSpawn() {
     if ((Math.abs(ax-x) < 30) && (Math.abs(ay-y) < 30)) {
         if (health < 40) {
             health ++;
-            score += 100;
         }
+        score += 100;
         ax = getRandomInt(90, canvas.width-30);
         ay = getRandomInt(90, canvas.height-30);
     }
@@ -335,6 +337,10 @@ function draw() {
     ctx.fillText("Health: " + health, 50, 40);
 
     ctx.font = "20px Impact";
+    ctx.fillStyle = 'red';
+    ctx.fillText("Score: " + score, 50, 60);
+
+    ctx.font = "20px Impact";
     ctx.fillStyle = 'blue';
     ctx.fillText("Level: " + level, 50, 80);
 
@@ -372,16 +378,6 @@ function draw() {
             y += spd;
         }
     }
-
-    // bomb drop
-    /*
-    if (firePressed) {
-        bx = x;
-        by = y;
-        console.log("Yup");
-        setTimeout(summonBomb(bx, by), 3000);
-    }
-    */
 
     // Collision
     for (z=0; z < enemies_temp.length; z++) {
