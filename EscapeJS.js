@@ -348,6 +348,7 @@ function draw() {
 
     charDraw();
     enemyUpdate();
+    EnemyKillRemove();
     HealthBar();
     //bombUpdate();
     appleSpawn();
@@ -419,11 +420,9 @@ setInterval(scoreUpdate, 10);
 setInterval(giveHealth, 5000);
 setInterval(summonWaves, 500);
 setInterval(deleteThee, 5000);
-setInterval(EnemyKillRemove, 10);
 
 
 /*
-
 +---------------------+
 |  DEV LEADERBOARD:   |
 +---------------------+
