@@ -59,7 +59,7 @@ var health = 40;
 var level = 1;
 var ax = getRandomInt(90, canvas.width-30);
 var ay = getRandomInt(90, canvas.height-30);
-var maxlevel = 10;
+var maxlevel = 20;
 
 
 // spawn
