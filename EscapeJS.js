@@ -397,12 +397,15 @@ function draw() {
 
 //Makes the game go faster
 function levelmaker() {
-    level++;
-    if (level > maxlevel){
+    if (level < maxlevel){
+        level++;
+        dog *= 3.5/4;
+        spd += .45;
+    }
+    else{
         level = maxlevel;
     }
-    dog *= 3.5/4;
-    spd += .45;
+
     ctx.font = "20px Impact";
     ctx.fillStyle = 'blue';
     ctx.fillText("Level: " + level, 50, 80);
