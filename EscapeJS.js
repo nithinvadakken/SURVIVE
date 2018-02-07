@@ -317,18 +317,22 @@ function bombUpdate() {
 }
 
 
+//score update
+function scoreUpdate() {
+    score++;
+    ctx.font = "20px Impact";
+    ctx.fillStyle = 'red';
+    ctx.fillText("Score: " + score, 50, 60);
+}
+
+
 // draws game
 function draw() {
-    score++;
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
     ctx.font = "20px Impact";
     ctx.fillStyle = 'blue';
     ctx.fillText("Health: " + health, 50, 40);
-
-    ctx.font = "20px Impact";
-    ctx.fillStyle = 'red';
-    ctx.fillText("Score: " + score, 50, 60);
 
     ctx.font = "20px Impact";
     ctx.fillStyle = 'blue';
@@ -413,6 +417,7 @@ function levelmaker() {
 
 setInterval(levelmaker,15000);
 setInterval(draw, 10);
+setInterval(scoreUpdate, 10);
 setInterval(giveHealth, 5000);
 setInterval(summonWaves, 500);
 setInterval(deleteThee, 5000);
