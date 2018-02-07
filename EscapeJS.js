@@ -266,6 +266,7 @@ function EnemyKillRemove() {
     for (g=0; g<enemies_temp.length; g++) {
         if ((Math.abs(enemies[g].x - x) < 30) && (Math.abs(enemies[g].y - y) < 30)) {
             enemies.splice(g, 1);
+            --health;
         }
     }
 
@@ -291,6 +292,7 @@ function appleSpawn() {
         if (health < 40) {
             health ++;
         }
+
         score += 100;
         ax = getRandomInt(90, canvas.width-30);
         ay = getRandomInt(90, canvas.height-30);
@@ -347,7 +349,6 @@ function draw() {
     charDraw();
     enemyUpdate();
     HealthBar();
-    EnemyKillRemove();
     //bombUpdate();
     appleSpawn();
 
@@ -411,12 +412,14 @@ function levelmaker() {
     ctx.fillText("Level: " + level, 50, 80);
 }
 
+
 setInterval(levelmaker,15000);
 setInterval(draw, 10);
 setInterval(scoreUpdate, 10);
 setInterval(giveHealth, 5000);
 setInterval(summonWaves, 500);
 setInterval(deleteThee, 5000);
+setInterval(EnemyKillRemove, 10);
 
 
 /*
