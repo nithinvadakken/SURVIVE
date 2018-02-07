@@ -100,7 +100,7 @@ function setCookie(cookiename, val, expiration) {
 
 // give health
 function giveHealth() {
-    health++;
+    if (health<40) {health++;}
 }
 
 // Checks if keys are pressed
@@ -319,7 +319,7 @@ function bombUpdate() {
 
 // draws game
 function draw() {
-
+    score++;
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
     ctx.font = "20px Impact";
