@@ -244,38 +244,12 @@ function HealthBar() {
 }
 
 
-// bomb class
-class Bomb {
-    constructor(bx, by) {
-        this.x = bx;
-        this.y = by;
-        this.color = bombColor[Math.floor(Math.random() * colorArray.length)];
-    }
-
-    makeBomb() {
-        ctx.beginPath();
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x + 10, this.y + 10, 20, 20);
-    }
-}
-
-
 // Kill da doods
 function EnemyKillRemove() {
     enemies_temp = enemies;
     for (g=0; g<enemies_temp.length; g++) {
         if ((Math.abs(enemies[g].x - x) < 30) && (Math.abs(enemies[g].y - y) < 30)) {
             enemies.splice(g, 1);
-        }
-    }
-
-    for (cow=0; cow<enemies.length; cow++) {
-        if ((Math.abs(enemies[cow].x - bx) < 30) && (Math.abs(enemies[cow].y - by) < 30)) {
-            for (woc=0; woc<enemies.length; woc++) {
-                if ((Math.abs(enemies[woc].x - bx) < 80) && (Math.abs(enemies[woc].y - by) < 80)) {
-                    enemies.splice(woc, 1);
-                }
-            }
         }
     }
 }
@@ -296,27 +270,6 @@ function appleSpawn() {
         ax = getRandomInt(90, canvas.width-30);
         ay = getRandomInt(90, canvas.height-30);
     }
-}
-
-
-// summon bombs
-function summonBomb(bx, by) {
-    setTimeout(function timerDelay() {
-        if (bombs.length < 3) {
-            bombs.push(new Bomb(bx, by));
-            bombs_temp.push(new Bomb(bx, by));
-        }
-    }, 5000);
-}
-
-
-// bomb update
-function bombUpdate() {
-    setTimeout(function Useless() {
-        for (u = 0; u < bombs.length; u++) {
-            bombs[u].makeBomb();
-        }
-    }, 5000);
 }
 
 
