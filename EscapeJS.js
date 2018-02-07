@@ -387,6 +387,7 @@ function draw() {
             enemies.shift();
         }
     }
+
     enemies_temp = enemies;
 
     if (health <= 0) {
