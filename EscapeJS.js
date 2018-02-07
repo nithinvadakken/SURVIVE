@@ -266,7 +266,6 @@ function EnemyKillRemove() {
     for (g=0; g<enemies_temp.length; g++) {
         if ((Math.abs(enemies[g].x - x) < 30) && (Math.abs(enemies[g].y - y) < 30)) {
             enemies.splice(g, 1);
-            --health;
         }
     }
 
