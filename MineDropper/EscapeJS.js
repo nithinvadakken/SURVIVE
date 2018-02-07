@@ -1,14 +1,9 @@
 //asks for username
 nametag = prompt("Please enter an appropriate user name:");
 
-while (nametag == null || nametag == "" || nametag.length < 1){
-    nametag = prompt("Please enter a valid username:");
-    if (nametag.length > 10){
-        nametag = prompt("Please enter a username that is no more than 10 characters")
-    }
+while (nametag == null || nametag == "" || nametag.length < 1 || nametag.length > 10){
+    nametag = prompt("Please enter a valid username that is no more than 10 characters:");
 }
-
-
 
 function getCookie(cookiename) {
     var name = cookiename + "=";
@@ -104,7 +99,7 @@ function setCookie(cookiename, val, expiration) {
 
 // give health
 function giveHealth() {
-    ++health;
+    health++;
 }
 
 // Checks if keys are pressed
@@ -414,7 +409,7 @@ function levelmaker() {
 
 setInterval(levelmaker,15000);
 setInterval(draw, 10);
-setInterval(giveHealth, 10000);
+setInterval(giveHealth, 5000);
 setInterval(summonWaves, 500);
 setInterval(deleteThee, 5000);
 
@@ -426,7 +421,7 @@ setInterval(deleteThee, 5000);
 +---------------------+
 1. Nithin- 28200
 2. Wiktor- 25000
-3. Marvin - 14674
+3. Marvin - 19796
 4.
 
  */
