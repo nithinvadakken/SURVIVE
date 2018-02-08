@@ -407,7 +407,7 @@ function timer_function() {
     }
 }
 
-setInterval(timer_function(),1000);
+setInterval(timer_function,1000);
 setInterval(draw, 10);
 setInterval(scoreUpdate, 10);
 setInterval(giveHealth, 5000);
