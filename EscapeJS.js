@@ -1,5 +1,5 @@
 //asks for username
-nametag = prompt("Please enter an appropriate user name:");
+nametag = prompt("\"NEW UPDATE PRESS \"P\" FOR PAUSE \nPlease enter an appropriate user name:");
 
 while (nametag == null || nametag == "" || nametag.length < 1 || nametag.length > 10){
     nametag = prompt("NEW UPDATE PRESS \"P\" FOR PAUSE \nPlease enter a valid username that is no more than 10 characters:");
@@ -61,6 +61,7 @@ var level = 1;
 var ax = getRandomInt(90, canvas.width-30);
 var ay = getRandomInt(90, canvas.height-30);
 var maxlevel = 20;
+var timer = 0;
 
 
 // spawn
@@ -379,14 +380,15 @@ function draw() {
         window.location.reload();
     }
 }
-
+var check_level = 15;
 //Makes the game go faster
 function levelmaker() {
-    if (timer % 15 === 0) {
+    if (timer  === check_level) {
         if (level < maxlevel) {
-            level++;
+            level+=1;
             dog *= 3.5 / 4;
             spd += .45;
+            check_level += 15;
         }
         else {
             level = maxlevel;
@@ -397,10 +399,11 @@ function levelmaker() {
     ctx.fillStyle = 'blue';
     ctx.fillText("Level: " + level, 50, 80);
 }
-var timer = 0;
+
 function timer_function() {
     if (check_pause === 0 ) {
         timer += 1;
+        levelmaker()
     }
 }
 
