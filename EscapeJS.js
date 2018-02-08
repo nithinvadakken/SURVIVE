@@ -2,7 +2,7 @@
 nametag = prompt("\"NEW UPDATE PRESS \"P\" FOR PAUSE \nPlease enter an appropriate user name:");
 
 while (nametag == null || nametag == "" || nametag.length < 1 || nametag.length > 10){
-    nametag = prompt("NEW UPDATE PRESS \"P\" FOR PAUSE \nPlease enter a valid username that is no more than 10 characters:");
+    nametag = prompt("NEW UPDATE: PRESS \"P\" FOR PAUSE \n FULLSCREEN SUGGESTED \n Please enter a valid username that is no more than 10 characters:");
 }
 
 function getCookie(cookiename) {
@@ -20,6 +20,7 @@ function getCookie(cookiename) {
     }
     return "";
 }
+
 
 function checkCookie() {
     var name = getCookie("username");
