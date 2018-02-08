@@ -2,7 +2,7 @@
 nametag = prompt("Please enter an appropriate user name:");
 
 while (nametag == null || nametag == "" || nametag.length < 1 || nametag.length > 10){
-    nametag = prompt("Please enter a valid username that is no more than 10 characters:");
+    nametag = prompt("NEW UPDATE PRESS \"P\" FOR PAUSE \nPlease enter a valid username that is no more than 10 characters:");
 }
 
 function getCookie(cookiename) {
@@ -45,6 +45,7 @@ var upPressed = false;
 var downPressed = false;
 var firePressed = false;
 var prevKey = 'up';
+var check_pause = 0;
 
 // movement
 var spd = 3;
@@ -100,8 +101,10 @@ function setCookie(cookiename, val, expiration) {
 
 // give health
 function giveHealth() {
-    if (health<40) {
-        health++;
+    if (check_pause === 0) {
+        if (health < 40) {
+            health++;
+        }
     }
 }
 
@@ -126,7 +129,19 @@ function keyDownHandler(e) {
     else if (e.keyCode === 80 || e.keyCode === 32) {
         firePressed = true;
     }
+    if (e.keyCode === 80){
+
+        if (check_pause === 0){
+
+            check_pause += 1
+        }
+        else if (check_pause === 1){
+            check_pause-=1;
+
+        }
+    }
 }
+
 
 
 // Checks if keys were released
@@ -199,21 +214,24 @@ class Enemy {
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, 30, 30);
-
-        this.x += (x-this.x)/dog;
-        this.y += (y-this.y)/dog;
+        if (check_pause === 0) {
+            this.x += (x - this.x) / dog;
+            this.y += (y - this.y) / dog;
+        }
     }
 }
 
 
 //waves of enemies
 function summonWaves() {
-    var wave = getRandomInt(3, 5);
-    for (var j = 0; j < wave+1; j ++) {
-        var ex = getRandomInt(0, canvas.width);
-        var ey = getRandomInt(0, canvas.height);
-        enemies.push(new Enemy(ex, ey));
-        enemies_temp.push(new Enemy(ex, ey));
+    if (check_pause === 0) {
+        var wave = getRandomInt(3, 5);
+        for (var j = 0; j < wave + 1; j++) {
+            var ex = getRandomInt(0, canvas.width);
+            var ey = getRandomInt(0, canvas.height);
+            enemies.push(new Enemy(ex, ey));
+            enemies_temp.push(new Enemy(ex, ey));
+        }
     }
 }
 
@@ -228,9 +246,17 @@ function enemyUpdate(){
 
 // remove "clouds"
 function deleteThee() {
-    if (enemies.length > 80) {
-        for (q=0; q<20; q++) {enemies.shift();}
-    } else {for (q=0; q<4; q++) {enemies.shift();}}
+    if (check_pause === 0) {
+        if (enemies.length > 80) {
+            for (q = 0; q < 20; q++) {
+                enemies.shift();
+            }
+        } else {
+            for (q = 0; q < 4; q++) {
+                enemies.shift();
+            }
+        }
+    }
 }
 
 
@@ -275,7 +301,9 @@ function appleSpawn() {
 
 //score update
 function scoreUpdate() {
-    score++;
+    if (check_pause === 0) {
+        score++;
+    }
     ctx.font = "20px Impact";
     ctx.fillStyle = 'red';
     ctx.fillText("Score: " + score, 50, 60);
@@ -306,30 +334,32 @@ function draw() {
     appleSpawn();
 
     // Move left
-    if (leftPressed) {
-        if (x - spd > 0) {
-            x -= spd;
+    if (check_pause === 0) {
+        if (leftPressed) {
+            if (x - spd > 0) {
+                x -= spd;
+            }
         }
-    }
 
-    // Move right
-    if (rightPressed) {
-        if (x + 30 + spd < canvas.width) {
-            x += spd;
+        // Move right
+        if (rightPressed) {
+            if (x + 30 + spd < canvas.width) {
+                x += spd;
+            }
         }
-    }
 
-    // Move up
-    if (upPressed) {
-        if (y - spd > 0) {
-            y -= spd;
+        // Move up
+        if (upPressed) {
+            if (y - spd > 0) {
+                y -= spd;
+            }
         }
-    }
 
-    // Move down
-    if (downPressed) {
-        if (y + 30 + spd < canvas.height) {
-            y += spd;
+        // Move down
+        if (downPressed) {
+            if (y + 30 + spd < canvas.height) {
+                y += spd;
+            }
         }
     }
 
@@ -352,13 +382,15 @@ function draw() {
 
 //Makes the game go faster
 function levelmaker() {
-    if (level < maxlevel){
-        level++;
-        dog *= 3.5/4;
-        spd += .45;
-    }
-    else{
-        level = maxlevel;
+    if (check_pause === 0) {
+        if (level < maxlevel) {
+            level++;
+            dog *= 3.5 / 4;
+            spd += .45;
+        }
+        else {
+            level = maxlevel;
+        }
     }
 
     ctx.font = "20px Impact";
@@ -367,7 +399,7 @@ function levelmaker() {
 }
 
 
-setInterval(levelmaker,15000);
+setInterval(levelmaker, 15000);
 setInterval(draw, 10);
 setInterval(scoreUpdate, 10);
 setInterval(giveHealth, 5000);
@@ -383,6 +415,4 @@ setInterval(deleteThee, 5000);
 2. Wiktor- 25000
 3. Marvin - 19796
 4.
-
  */
-
