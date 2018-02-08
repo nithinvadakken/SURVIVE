@@ -248,7 +248,7 @@ function enemyUpdate(){
 // remove "clouds"
 function deleteThee() {
     if (check_pause === 0) {
-        if (enemies.length > 80) {
+        if (enemies.length > 40) {
             for (q = 0; q < 20; q++) {
                 enemies.shift();
             }
