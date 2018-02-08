@@ -232,8 +232,8 @@ function summonWaves() {
             var ex = getRandomInt(0, canvas.width);
             var ey = getRandomInt(0, canvas.height);
             while ((ex > x-50&& ex<x+50)&&(ey > y -50 && ey <x+50)){
-                var ex = getRandomInt(0, canvas.width);
-                var ey = getRandomInt(0, canvas.height);
+                ex = getRandomInt(0, canvas.width);
+                ey = getRandomInt(0, canvas.height);
             }
 
             enemies.push(new Enemy(ex, ey));
