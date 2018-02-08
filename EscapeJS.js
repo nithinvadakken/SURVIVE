@@ -62,6 +62,7 @@ var ax = getRandomInt(90, canvas.width-30);
 var ay = getRandomInt(90, canvas.height-30);
 var maxlevel = 20;
 var timer = 0;
+var hero_size = 1/10 * canvas.width;
 
 
 // spawn
@@ -168,7 +169,7 @@ function keyUpHandler(e) {
 function charDraw() {
     ctx.beginPath();
     ctx.fillStyle = "orange";
-    ctx.fillRect(x, y, 30, 30);
+    ctx.fillRect(x, y, hero_size, hero_size);
 
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
@@ -214,7 +215,7 @@ class Enemy {
     makeEnemy() {
         ctx.beginPath();
         ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, 30, 30);
+        ctx.fillRect(this.x, this.y, hero_size, hero_size);
         if (check_pause === 0) {
             this.x += (x - this.x) / dog;
             this.y += (y - this.y) / dog;
@@ -275,7 +276,7 @@ function HealthBar() {
 function EnemyKillRemove() {
     enemies_temp = enemies;
     for (g=0; g<enemies_temp.length; g++) {
-        if ((Math.abs(enemies[g].x - x) < 30) && (Math.abs(enemies[g].y - y) < 30)) {
+        if ((Math.abs(enemies[g].x - x) < hero_size) && (Math.abs(enemies[g].y - y) < hero_size)) {
             enemies.splice(g, 1);
         }
     }
@@ -286,9 +287,9 @@ function EnemyKillRemove() {
 function appleSpawn() {
     ctx.beginPath();
     ctx.fillStyle = '#e21638';
-    ctx.fillRect(ax, ay + 10, 30, 30);
+    ctx.fillRect(ax, ay + 10, hero_size, hero_size);
 
-    if ((Math.abs(ax-x) < 30) && (Math.abs(ay-y) < 30)) {
+    if ((Math.abs(ax-x) < hero_size) && (Math.abs(ay-y) < hero_size)) {
         if (health < 40) {
             health ++;
         }
@@ -366,7 +367,7 @@ function draw() {
 
     // Collision
     for (z=0; z < enemies_temp.length; z++) {
-        if ((Math.abs(enemies[z].x - x) < 30) && (Math.abs(enemies[z].y - y) < 30)) {
+        if ((Math.abs(enemies[z].x - x) < hero_size) && (Math.abs(enemies[z].y - y) < hero_size)) {
             health = health - 0.5;
             enemies.shift();
         }
