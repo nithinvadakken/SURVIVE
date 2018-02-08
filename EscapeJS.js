@@ -62,7 +62,7 @@ var ax = getRandomInt(90, canvas.width-30);
 var ay = getRandomInt(90, canvas.height-30);
 var maxlevel = 20;
 var timer = 0;
-var hero_size = 1/20 * canvas.width;
+var hero_size = 1/9 * canvas.width;
 
 
 // spawn
@@ -231,6 +231,11 @@ function summonWaves() {
         for (var j = 0; j < wave + 1; j++) {
             var ex = getRandomInt(0, canvas.width);
             var ey = getRandomInt(0, canvas.height);
+            while ((ex > x-50&& ex<x+50)&&(ey > y -50 && ey <x+50)){
+                var ex = getRandomInt(0, canvas.width);
+                var ey = getRandomInt(0, canvas.height);
+            }
+
             enemies.push(new Enemy(ex, ey));
             enemies_temp.push(new Enemy(ex, ey));
         }
