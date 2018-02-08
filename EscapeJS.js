@@ -382,7 +382,7 @@ function draw() {
 
 //Makes the game go faster
 function levelmaker() {
-    if (check_pause === 0) {
+    if (timer % 15 === 0) {
         if (level < maxlevel) {
             level++;
             dog *= 3.5 / 4;
@@ -397,9 +397,14 @@ function levelmaker() {
     ctx.fillStyle = 'blue';
     ctx.fillText("Level: " + level, 50, 80);
 }
+var timer = 0;
+function timer_function() {
+    if (check_pause === 0 ) {
+        timer += 1;
+    }
+}
 
-
-setInterval(levelmaker, 15000);
+setInterval(timer_function(),1000);
 setInterval(draw, 10);
 setInterval(scoreUpdate, 10);
 setInterval(giveHealth, 5000);
