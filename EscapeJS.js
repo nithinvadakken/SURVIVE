@@ -62,7 +62,7 @@ var ax = getRandomInt(90, canvas.width-30);
 var ay = getRandomInt(90, canvas.height-30);
 var maxlevel = 20;
 var timer = 0;
-var hero_size = 1/20 * canvas.width;
+var hero_size = 30;
 
 
 // spawn
