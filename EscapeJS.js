@@ -53,6 +53,7 @@ while (nametag == null || nametag == "" || nametag.length < 1 || nametag.length 
     nametag = prompt("NEW UPDATE: PRESS \"P\" FOR PAUSE \n FULLSCREEN SUGGESTED \n Please enter a valid username that is no more than 10 characters:");
 }
 
+
 function getCookie(cookiename) {
     var name = cookiename + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -130,20 +131,11 @@ document.addEventListener("keyup", keyUpHandler, false);
 
 //color array for enemies
 var colorArray = [
-    '#838CFF',
-    '#4A33E8',
-    '#4479FF',
-    '#33B0E8',
-    '#46FCFF'
-];
-
-//color array for bomb
-var bombColor = [
-    "#BD2404",
-    "#750401",
-    "#F26105",
-    "#F59018",
-    "#F5BC0C"
+    '#1f721f',
+    '#41763b',
+    '#57824b',
+    '#77a577',
+    '#3b774d'
 ];
 
 function setCookie(cookiename, val, expiration) {
@@ -379,7 +371,7 @@ function draw() {
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
     ctx.font = "20px Impact";
-    ctx.fillStyle = 'blue';
+    ctx.fillStyle = 'red';
     ctx.fillText("Health: " + health, 50, 40);
 
     ctx.font = "20px Impact";
@@ -387,14 +379,13 @@ function draw() {
     ctx.fillText("Score: " + score, 50, 60);
 
     ctx.font = "20px Impact";
-    ctx.fillStyle = 'blue';
+    ctx.fillStyle = 'red';
     ctx.fillText("Level: " + level, 50, 80);
 
     charDraw();
     enemyUpdate();
     EnemyKillRemove();
     HealthBar();
-    //bombUpdate();
     appleSpawn();
 
     // Move left
