@@ -142,7 +142,7 @@ function setCookie(cookiename, val, expiration) {
     var d = new Date();
     d.setTime(d.getTime() + (expiration*24*60*60*1000));
     var expires = "expires="+ d.toUTCString();
-    document.cookie = cookiename + "=" + val + ";" + expiration + ";path=/";
+    document.cookie = cookiename + "=" + val + ";" + expires + ";path=/";
 }
 
 // give health
