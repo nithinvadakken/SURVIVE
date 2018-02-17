@@ -6,17 +6,48 @@
     <meta charset="UTF-8">
     <title>S U R V I V E</title>
     <link rel = "stylesheet" href = "EscapeCSS.css">
-
+    <!--Look at Google Fonts for better fonts other than Roboto-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
 </head>
 
-<body onload="checkCookie()">
+<body>
 <audio autoplay>
     <source src="Flight-Of-The-Bumblebee-Rimsky-Korsakov.ogg" type="audio/ogg">
     <source src="Flight_Of_The_Bumblebee.wav" type="audio/wav">
     Your browser does not support the audio element.
 </audio>
+<!--Home Page-->
+<div class = "page start">
+    <h1 class = "title">SURVIVE</h1>
+    <input id = "name" placeholder = "Enter an appropriate username" maxlength = "10" autofocus>
+    <p id = "startdesc">press enter to start</p>
+</div>
+<!--Game-->
+<div class = "page">
+    <canvas class = "myCanvas" id="myCanvas"></canvas>
+</div>
+<!--End page-->
+<div class = "page">
+    <h1 class = "title" style = "letter-spacing:0px;top:0px;">Game over!</h1>
+    <p id = "enddesc">Your score was <span id = "score"></span></p>
+    <h2 class = "title" class = "leaderboard" style = "top:35%; font-size:56px; letter-spacing:0px;">Leaderboard</h2>
+    <table id = "end" class = "leaderboard" cellpadding="8px" cellspacing = "0px">
+    </table>
+</div>
 
-<canvas class = "myCanvas" id="myCanvas"></canvas>
+<script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAR9cYvxaoARz83GNxbP3rasiSh31u7s2o",
+    authDomain: "survive-f7a51.firebaseapp.com",
+    databaseURL: "https://survive-f7a51.firebaseio.com",
+    projectId: "survive-f7a51",
+    storageBucket: "survive-f7a51.appspot.com",
+    messagingSenderId: "697891439025"
+  };
+  firebase.initializeApp(config);
+</script>
 <script src = "EscapeJS.js"></script>
 </body>
 </html>
