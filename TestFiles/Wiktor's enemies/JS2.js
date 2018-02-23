@@ -12,7 +12,7 @@ if (nametag.length > 10) {
 var timer = 0;
 
 // variables
-level = 50;
+level = 5;
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext("2d");
 var score = 0;

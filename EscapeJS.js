@@ -351,7 +351,7 @@ var playGame = function(){
         }
     }
 
-
+    var check = 0;
     // Apple
     function appleSpawn() {
         ctx.beginPath();
@@ -366,8 +366,10 @@ var playGame = function(){
             score += 100;
             ax = getRandomInt(90, canvas.width-30);
             ay = getRandomInt(90, canvas.height-30);
+            check +=1;
         }
     }
+
 
 
     //score update
@@ -456,10 +458,12 @@ var playGame = function(){
             var leaderboard = document.getElementById("end");
             console.log(leaderboard);
     jvnrvjjrvjrvjrvjrv = firebase.database().ref("scores");
-    score = jvnrvjjrvjrvjrvjrv.push({
-        name: nametag,
-        score: score
-    });
+    if (score === check_score()+100*check) {
+        score = jvnrvjjrvjrvjrvjrv.push({
+            name: nametag,
+            score: score
+        });
+    }
 
     firebase.database().ref('scores').once('value', function(snapshot) {
         data = [];
@@ -506,6 +510,12 @@ var playGame = function(){
             levelmaker()
         }
     }
+    var check = 0;
+    function check_score() {
+        if (check_pause === 0)
+            check++
+    }
+    setInterval(check_score(),10);
     setInterval(timer_function,1000);
     setInterval(draw, 10);
     setInterval(scoreUpdate, 10);
