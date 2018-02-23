@@ -455,8 +455,8 @@ var playGame = function(){
             document.getElementById("score").innerHTML = score;
             var leaderboard = document.getElementById("end");
             console.log(leaderboard);
-    scores = firebase.database().ref("scores");
-    score = scores.push({
+    jvnrvjjrvjrvjrvjrv = firebase.database().ref("scores");
+    score = jvnrvjjrvjrvjrvjrv.push({
         name: nametag,
         score: score
     });
@@ -539,12 +539,3 @@ function enterDown(e){
 }
 
 document.addEventListener("keydown", enterDown, false);
-/*
-+---------------------+
-|  DEV LEADERBOARD:   |
-+---------------------+
-1. Nithin- 28200
-2. Wiktor- 25000
-3. Marvin - 19796
-4.
- */
