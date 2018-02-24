@@ -87,3 +87,19 @@ canvas {
     left:50%;
     transform:translateX(-50%);
 }
+#leaderboard-button, #back-button{
+    text-decoration:none;
+    color:white;
+    cursor:pointer;
+    margin:16px;
+    display:inline-block;
+}
+#leaderboard-button:hover, #back-button:hover{
+    text-decoration:underline;
+}
+#lb{
+    position:absolute;
+    top:60%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}

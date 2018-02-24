@@ -548,4 +548,24 @@ function enterDown(e){
     }
 }
 
+firebase.database().ref('scores').once('value', function(snapshot) {
+    data = [];
+    for(var i in snapshot.val()){
+        data.push(snapshot.val()[i]);
+    }
+    data = data.sort(function(a,b){return b["score"] - a["score"] });
+    document.getElementById("lb").innerHTML = "<tr><th>Position</th><th>Name</th><th>Score</th></tr>"
+    for(var i = 0; i < 5; i ++){
+        document.getElementById("lb").innerHTML+="<tr><td>"+(i+1)+"</td><td>"+data[i].name+"</td><td>"+data[i].score+"</td></tr>";
+    }
+})
+
+document.getElementById("leaderboard-button").addEventListener("click", function(){
+    showPage(3);
+});
+
+document.getElementById("back-button").addEventListener("click", function(){
+    showPage(0);
+});
+
 document.addEventListener("keydown", enterDown, false);
