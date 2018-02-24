@@ -15,6 +15,8 @@ document.getElementById("back-button").addEventListener("click",function(){showP
 
 
 /*
+
+
 So, hackers...
 you thought it would be fun to put in your own scores on our leaderboard?
 well...HAVE FUN DOING IT NOW!!!
@@ -22,4 +24,6 @@ well...HAVE FUN DOING IT NOW!!!
 MWAHAHAHAHAHAHA!!!!!
 
             -NITHIN VADAKKEN
+
+
  */
