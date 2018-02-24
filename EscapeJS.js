@@ -46,14 +46,6 @@ if (!Array.prototype.indexOf) {
 }
 
 
-//asks for username
-//nametag = prompt("\"NEW UPDATE PRESS \"P\" FOR PAUSE \nPlease enter an appropriate user name:");
-//
-//while (nametag == null || nametag == "" || nametag.length < 1 || nametag.length > 10){
-//    nametag = prompt("NEW UPDATE: PRESS \"P\" FOR PAUSE \n FULLSCREEN SUGGESTED \n Please enter a valid username that is no more than 10 characters:");
-//}
-
-
 function getCookie(cookiename) {
     var name = cookiename + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -70,20 +62,6 @@ function getCookie(cookiename) {
     return "";
 }
 
-
-//function checkCookie() {
-//    var temp = getCookie("usernames")||"[]";
-//    console.log(temp);
-//    var names = JSON.parse(temp);
-//    if (names.indexOf(nametag) != -1) {
-//        alert("Back for more, " + names[names.indexOf(nametag)] + "?");
-//    } else {
-//        if (nametag != "" && nametag != null) {
-//            names.push(nametag);
-//            setCookie("usernames", JSON.stringify(names), 365);
-//        }
-//    }
-//}
 
 function submitName() {
     nametag = document.getElementById("name").value;
@@ -126,8 +104,6 @@ var playGame = function(){
     var spd = 3;
     var x = canvas.width/2;
     var y = canvas.height/2;
-    var bx = x;
-    var by = y;
     var dog = 250;
 
     // features
@@ -143,8 +119,6 @@ var playGame = function(){
     // spawn
     var enemies = [];
     var enemies_temp = [];
-    var bombs =[];
-    var bombs_temp = [];
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -171,6 +145,8 @@ var playGame = function(){
 
     // Checks if keys are pressed
     function keyDownHandler(e) {
+        if((((e.keyCode === 91) || (e.keyCode === 17)) && (e.keyCode === 16) && (e.keyCode === 67)) || (e.keyCode === 123)) {return false;}
+
         if(e.keyCode === 68 || e.keyCode === 39) {
             rightPressed = true;
             prevKey = 'right';
@@ -476,7 +452,7 @@ var playGame = function(){
         for(var i = 0; i < 5; i ++){
             leaderboard.innerHTML+="<tr><td>"+(i+1)+"</td><td>"+data[i].name+"</td><td>"+data[i].score+"</td></tr>";
         }
-    })
+    });
     firebase.database().ref('plays').once('value', function(snapshot) {
         plays = snapshot.val();
         firebase.database().ref('plays').set(plays + 1);
