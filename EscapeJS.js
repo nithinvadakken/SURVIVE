@@ -545,8 +545,7 @@ element.__defineGetter__('id', function() {
     checkStatus = 'on';
     showPage(4);
     setTimeout(function(){while(true){
-        alert("We are currently downloading a virus onto your computer to punish you for your bad deeds...");
-        window.open("https://www.youtube.com/watch?v=iyagVZm_b_o");
+        alert("TRY CHEATING NOW, HACKER...");
     }},300)
 });
 
