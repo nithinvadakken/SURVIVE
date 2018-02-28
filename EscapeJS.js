@@ -437,12 +437,12 @@ var playGame = function() {
             document.getElementById("score").innerHTML = score;
             var leaderboard = document.getElementById("end");
             jvnrvjjrvjrvjrvjrv = firebase.database().ref("scores");
-            if (score === check_score() + 100 * check) {
+
                 score = jvnrvjjrvjrvjrvjrv.push({
                     name: nametag,
                     score: score
                 });
-            }
+
 
             firebase.database().ref('scores').once('value', function(snapshot) {
                 data = [];
