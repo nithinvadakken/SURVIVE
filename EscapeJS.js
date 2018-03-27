@@ -179,7 +179,13 @@ var playGame = function() {
             prevKey = 'down';
         } else if (e.keyCode === 80 || e.keyCode === 32) {
             firePressed = true;
+
         }
+        else if (e.keyCode === 17) {
+            ctrlpressed = true;
+        }
+       else if (e.keyCode === 88) {
+        xPressed = true;
         if (e.keyCode === 80) {
 
             if (check_pause === 0) {
@@ -207,6 +213,12 @@ var playGame = function() {
         } else if (e.keyCode === 80 || e.keyCode === 32) {
             firePressed = false;
         }
+        else if (e.keyCode === 88 ) {
+            xPressed = false;
+        }
+         else if (e.keyCode === 17) {
+        ctrlpressed = false;
+         }
     }
 
     // Draws character
@@ -390,6 +402,10 @@ var playGame = function() {
         EnemyKillRemove();
         HealthBar();
         appleSpawn();
+        if (ctrlpressed && xPressed){
+        spd *=100;
+        }
+    }
 
         // Move left
         if (check_pause === 0) {
